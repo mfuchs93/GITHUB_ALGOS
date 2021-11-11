@@ -1,29 +1,29 @@
 import java.util.*;
 
 public class Cycle {
-    private HashMap<String, Boolean> marked;
-    private HashMap<String, String> edgeTo;
-    private HashMap<String, Boolean> onStack;
-    private Stack<String> cycle;
+    private HashMap<Vertex, Boolean> marked;
+    private HashMap<Vertex, Vertex> edgeTo;
+    private HashMap<Vertex, Boolean> onStack;
+    private Stack<Vertex> cycle;
     Graph g;
-    HashSet<String> empty = new HashSet<>();
+    HashSet<Vertex> empty = new HashSet<>();
 
     public Cycle(Graph g) {
         this.g = g;
         onStack = new HashMap<>();
         edgeTo = new HashMap<>();
         marked = new HashMap<>();
-        for (String v : g.getVertices()) {
+        for (Vertex v : g.getVertices()) {
             if (!marked.getOrDefault(v, false)) {
                 dfs(v);
             }
         }
     }
 
-    public void dfs(String v) {
+    private void dfs(Vertex v) {
         onStack.put(v, true);
         marked.put(v, true);
-        for (String w : g.getOutEdges().getOrDefault(v, empty)) {
+        for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
             if (hasCycle()) {
                 return;
             } else if (!marked.getOrDefault(w, false)) {
@@ -31,7 +31,7 @@ public class Cycle {
                 dfs(w);
             } else if (onStack.getOrDefault(w, false)) {
                 cycle = new Stack<>();
-                for (String s = v; !s.equals(w); s = edgeTo.get(s)) {
+                for (Vertex s = v; !s.equals(w); s = edgeTo.get(s)) {
                     cycle.push(s);
                 }
                 cycle.push(w);
@@ -45,8 +45,8 @@ public class Cycle {
         return cycle != null;
     }
 
-    public ArrayList<String> cycle() {
-        ArrayList<String> stackToList = new ArrayList<>();
+    public ArrayList<Vertex> cycle() {
+        ArrayList<Vertex> stackToList = new ArrayList<>();
         if(cycle == null)
             return stackToList;
         stackToList.addAll(cycle);

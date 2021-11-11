@@ -5,35 +5,36 @@ import static java.util.stream.Collectors.toSet;
 
 public class Graph {
 
-    private HashMap<String, HashSet<String>> inEdges = new HashMap<>();
-    private HashMap<String, HashSet<String>> outEdges = new HashMap<>();
+    private HashMap<Vertex, HashSet<Vertex>> inEdges = new HashMap<>();
+    private HashMap<Vertex, HashSet<Vertex>> outEdges = new HashMap<>();
 
-    public Graph(){}
+    public Graph() {
+    }
 
     public Graph(Graph graph) {
-        for (String v : graph.getInEdges().keySet()) {
+        for (Vertex v : graph.getInEdges().keySet()) {
             this.inEdges.put(v, new HashSet<>());
             this.inEdges.get(v).addAll(graph.getInEdges().get(v));
         }
-        for (String v : graph.getOutEdges().keySet()) {
+        for (Vertex v : graph.getOutEdges().keySet()) {
             this.outEdges.put(v, new HashSet<>());
             this.outEdges.get(v).addAll(graph.getOutEdges().get(v));
         }
     }
 
-    public HashMap<String, HashSet<String>> getInEdges() {
+    public HashMap<Vertex, HashSet<Vertex>> getInEdges() {
         return inEdges;
     }
 
-    public void setInEdges(HashMap<String, HashSet<String>> inEdges) {
+    public void setInEdges(HashMap<Vertex, HashSet<Vertex>> inEdges) {
         this.inEdges = inEdges;
     }
 
-    public HashMap<String, HashSet<String>> getOutEdges() {
+    public HashMap<Vertex, HashSet<Vertex>> getOutEdges() {
         return outEdges;
     }
 
-    public void setOutEdges(HashMap<String, HashSet<String>> outEdges) {
+    public void setOutEdges(HashMap<Vertex, HashSet<Vertex>> outEdges) {
         this.outEdges = outEdges;
     }
 
@@ -45,29 +46,29 @@ public class Graph {
         return outEdges.getOrDefault(v, new HashSet<>()).size();
     }
 
-    public Set<String> getVertices() {
+    public Set<Vertex> getVertices() {
         return Stream.of(inEdges.keySet(), outEdges.keySet()).flatMap(Set::stream).collect(toSet());
     }
 
     @Override
     public String toString() {
         String graph = "Graph{\n";
-        for (String key : outEdges.keySet()) {
-            for (String neighbor : outEdges.get(key)) {
+        for (Vertex key : outEdges.keySet()) {
+            for (Vertex neighbor : outEdges.get(key)) {
                 graph += key.toString() + " --> " + neighbor.toString() + "\n";
             }
         }
         return graph + '}';
     }
 
-    public Graph removeVertex(String v) {
+    public Graph removeVertex(Vertex v) {
         Graph g = new Graph(this);
         g.inEdges.remove(v);
-        for (HashSet<String> in : g.inEdges.values()) {
+        for (HashSet<Vertex> in : g.inEdges.values()) {
             in.remove(v);
         }
         g.outEdges.remove(v);
-        for (HashSet<String> out : g.outEdges.values()) {
+        for (HashSet<Vertex> out : g.outEdges.values()) {
             out.remove(v);
         }
         return g;

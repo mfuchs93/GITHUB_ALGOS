@@ -1,20 +1,32 @@
 import java.io.*;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Main {
-
     public static Graph readGraphFromFile(InputStream inputStream) throws IOException {
         Scanner scanner = new Scanner(inputStream);
         Graph g = new Graph();
-        while(scanner.hasNextLine()) {
+        HashMap<String, Vertex> vertices = new HashMap<>();
+        int id_counter = 0;
+        while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if(line.contains("#") || line.contains("%") || line.isEmpty()) {}
-            else {
+            if (line.contains("#") || line.contains("%") || line.isEmpty()) {
+            } else {
                 String[] arr = line.trim().split(" ");
-                String start = arr[0];
-                String target = arr[1];
+                Vertex start;
+                Vertex target;
+                start = vertices.getOrDefault(arr[0], null);
+                if (start == null) {
+                    start = new Vertex(id_counter++, arr[0]);
+                    vertices.put(arr[0], start);
+                }
+                target = vertices.getOrDefault(arr[1], null);
+                if (target == null) {
+                    target = new Vertex(id_counter++, arr[1]);
+                    vertices.put(arr[1], target);
+                }
 
                 g.getOutEdges().putIfAbsent(start, new HashSet<>());
                 g.getOutEdges().get(start).add(target);
@@ -27,18 +39,18 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        if(args.length == 0) {
+        if (args.length == 0) {
             System.out.println("no file given");
             return;
         }
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Future future = executor.submit(() -> {
+        Future<?> future = executor.submit(() -> {
             try {
                 InputStream in = new FileInputStream(args[0]);
                 Graph g = readGraphFromFile(in);
-                HashSet<String> s = DFVS.solve(g);
-                for(String i: s){
-                    System.out.println(i);
+                HashSet<Vertex> s = DFVS.solve(g);
+                for (Vertex i : s) {
+                    System.out.println(i.getName());
                 }
             } catch (FileNotFoundException e) {
                 System.out.println("File not found '" + args[0] + "'");
@@ -50,9 +62,7 @@ public class Main {
             future.get(180, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             future.cancel(true);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             executor.shutdown();

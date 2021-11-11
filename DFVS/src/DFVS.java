@@ -2,14 +2,14 @@ import java.util.*;
 
 public class DFVS {
 
-    public static HashSet<String> branch(Graph g, int k) {
+    public static HashSet<Vertex> branch(Graph g, int k) {
         if(Thread.interrupted()){
             System.out.println("Timeout");
             System.exit(1);
         }
         if(k < 0) return null;
-        HashSet<String> s = new HashSet<>();
-        ArrayList<String> cycle =(ArrayList<String>) new Cycle(g).cycle();
+        HashSet<Vertex> s = new HashSet<>();
+        ArrayList<Vertex> cycle = new Cycle(g).cycle();
         if(cycle.isEmpty()) {
             return s;
         }
@@ -23,15 +23,13 @@ public class DFVS {
         return null;
     }
 
-    public static HashSet<String> solve(Graph g) {
+    public static HashSet<Vertex> solve(Graph g) {
         int k = 0;
-        HashSet<String> s = null;
+        HashSet<Vertex> s = null;
         while(s == null) {
-           // System.out.println("value of k is " + k);
             s = branch(g, k);
             k = k + 1;
         }
-        //System.out.println("Solution is " + s);
         return s;
     }
 }
