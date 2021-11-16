@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.min;
@@ -15,11 +13,12 @@ public class Tarjan {
     public Tarjan(Graph g) {
         this.g = g;
         this.index = 0;
-        this.unvisitedVertices = new ArrayList<Vertex>(g.getVertices());
+        this.unvisitedVertices = new ArrayList<>(g.getVertices());
         this.verticesInProgress = new Stack<>();
         while (!unvisitedVertices.isEmpty()) {
             tarjan(unvisitedVertices.get(0));
         }
+        //System.out.println("--------------------------------------------------------------------------------");
     }
 
     public void tarjan(Vertex v) {
@@ -27,7 +26,7 @@ public class Tarjan {
         v.setDfsLowLink(index++);
         verticesInProgress.push(v);
         unvisitedVertices.remove(v);
-        for (Vertex w : g.getOutEdges().get(v)) {
+        for (Vertex w : g.getOutEdges().getOrDefault(v, new HashSet<>())) {
             if (unvisitedVertices.contains(w)) {
                 tarjan(w);
                 v.setDfsLowLink(min(v.getDfsLowLink(), w.getDfsLowLink()));
@@ -36,15 +35,16 @@ public class Tarjan {
             }
         }
         if (v.getDfsLowLink() == v.getDfsIndex()) {
-            System.out.println("SZK");
+            //System.out.println("SZK");
             HashSet<Vertex> vertices = new HashSet<>();
             while (verticesInProgress.contains(v)) {
                 Vertex z = verticesInProgress.pop();
-                System.out.println(z);
+                //System.out.println(z);
                 vertices.add(z);
             }
             if (vertices.size() > 1) {
                 buildSCC(vertices);
+               // System.out.println("SZK: " + vertices);
             }
 
         }
@@ -74,10 +74,6 @@ public class Tarjan {
     }
 
     public HashSet<Graph> SCC() {
-        HashSet<Graph> empty = new HashSet<>();
-        if(subGraphs == null) {
-            return empty;
-        }
         return subGraphs;
     }
 }

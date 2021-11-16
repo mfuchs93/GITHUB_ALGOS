@@ -12,8 +12,7 @@ public class Main {
         int id_counter = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            if (line.contains("#") || line.contains("%") || line.isEmpty()) {
-            } else {
+            if (!line.contains("#") && !line.contains("%") && !line.isEmpty()) {
                 String[] arr = line.trim().split(" ");
                 Vertex start;
                 Vertex target;
@@ -38,7 +37,7 @@ public class Main {
         return g;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("no file given");
             return;
