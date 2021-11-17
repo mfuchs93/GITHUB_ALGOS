@@ -20,6 +20,14 @@ public class Cycle {
         }
     }
 
+    public Cycle(Graph g, Vertex v) {
+        this.g = g;
+        onStack = new HashMap<>();
+        edgeTo = new HashMap<>();
+        marked = new HashMap<>();
+        dfs(v);
+    }
+
     private void dfs(Vertex v) {
         onStack.put(v, true);
         marked.put(v, true);
