@@ -38,11 +38,11 @@ public class Graph {
         this.outEdges = outEdges;
     }
 
-    public int getInDegree(String v) {
+    public int getInDegree(Vertex v) {
         return inEdges.getOrDefault(v, new HashSet<>()).size();
     }
 
-    public int getOutDegree(String v) {
+    public int getOutDegree(Vertex v) {
         return outEdges.getOrDefault(v, new HashSet<>()).size();
     }
 
@@ -71,6 +71,7 @@ public class Graph {
         for (HashSet<Vertex> out : g.outEdges.values()) {
             out.remove(v);
         }
+        v.setForbidden(true);
         return g;
     }
 }

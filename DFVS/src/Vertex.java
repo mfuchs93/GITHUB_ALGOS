@@ -5,10 +5,19 @@ public class Vertex {
     private String name;
     private int dfsIndex;
     private int dfsLowLink;
+    private boolean forbidden;
 
     public Vertex(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public boolean isForbidden() {
+        return forbidden;
+    }
+
+    public void setForbidden(boolean forbidden) {
+        this.forbidden = forbidden;
     }
 
     public int getId() {

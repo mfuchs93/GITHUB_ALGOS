@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DFVS {
 
@@ -18,17 +19,22 @@ public class DFVS {
         for (Graph subGraph :
                 subGraphs) {
             ArrayList<Vertex> cycle = new Cycle(subGraph).cycle();
-            if (cycle.isEmpty()) {  //kann eigentlich hier nicht vorkommen, da subGraph mindestens einen Kreis hat!
-                return s;
-            }
+            cycle.removeIf(Vertex::isForbidden);
+            if (cycle.isEmpty()) return null; // wenn alle verboten return
+//            if (cycle.isEmpty()) {  //kann eigentlich hier nicht vorkommen, da subGraph mindestens einen Kreis hat!
+//                return s;
+//            }
             while (restK - counter >= 0) {
                 for (Vertex vertex : cycle) {
-                    s = branch(subGraph.removeVertex(vertex), counter - 1);
-                    if (s != null) {
-                        s.add(vertex);
-                        break;
+                    if (!vertex.isForbidden()) { //nur löschen wenn nicht verboten
+                        s = branch(subGraph.removeVertex(vertex), counter - 1);
+                        if (s != null) {
+                            s.add(vertex);
+                            break;
+                        }
                     }
                 }
+                cycle.forEach(v -> v.setForbidden(false)); //wo wieder erlauben??
                 if (s != null) {
                     restK -= counter;
                     counter = 1;
