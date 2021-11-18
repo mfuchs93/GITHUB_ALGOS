@@ -3,7 +3,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 
-public class Graph {
+public class Graph implements Comparable<Graph>{
 
     private HashMap<Vertex, HashSet<Vertex>> inEdges = new HashMap<>();
     private HashMap<Vertex, HashSet<Vertex>> outEdges = new HashMap<>();
@@ -89,5 +89,14 @@ public class Graph {
         g.setOutEdges(g.getInEdges());
         g.setInEdges(tmp);
         return g;
+    }
+
+    @Override
+    public int compareTo(Graph graph) {
+        if (this.getVertices().size() <= graph.getVertices().size()) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }
