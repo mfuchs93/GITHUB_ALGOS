@@ -5,16 +5,16 @@ public class ReductionRules {
     private static HashSet<Vertex> empty = new HashSet<>();
 
 
-    public static Graph removeNoneCycleVertex(Graph g) {
-        Graph h = new Graph(g);
-        for (Vertex v : h.getVertices()) {
-            ArrayList<Vertex> cycle = new Cycle(h, v, SearchType.CONTAINS_VERTEX).cycle();
+    public static void removeNoneCycleVertex(Graph g) {
+        //Graph h = new Graph(g);
+        for (Vertex v : g.getVertices()) {
+            ArrayList<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX).cycle();
             if (cycle.isEmpty()) {
-                h.removeVertex(v, false, false);
+                g.removeVertex(v, false, false);
                 //System.out.println("deleted Vertex " + v);
             }
         }
-        return h;
+        //return h;
     }
 
     public static void removeNoneCycleEdge(Graph g) {
