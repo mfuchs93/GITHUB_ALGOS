@@ -9,6 +9,7 @@ public class Tarjan {
     private final ArrayList<Vertex> unvisitedVertices;
     private final Stack<Vertex> verticesInProgress;
     private final HashSet<Graph> subGraphs = new HashSet<>();
+    private int k;
 
     public Tarjan(Graph g) {
         this.g = g;
@@ -42,9 +43,14 @@ public class Tarjan {
                 //System.out.println(z);
                 vertices.add(z);
             }
-            if (vertices.size() > 1) {
+            if (vertices.size() == 1) {
+                Vertex x = vertices.iterator().next();
+                if (g.getOutEdges().getOrDefault(x, new HashSet<>()).contains(x) && !x.isForbidden()) {
+                    buildSCC(vertices);
+                }
+            } else if (vertices.size() > 1) {
                 buildSCC(vertices);
-               // System.out.println("SZK: " + vertices);
+                // System.out.println("SZK: " + vertices);
             }
 
         }

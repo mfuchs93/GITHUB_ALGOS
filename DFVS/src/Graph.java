@@ -48,21 +48,27 @@ public class Graph {
 
     public Set<Vertex> getVertices() {
         return Stream.of(inEdges.keySet(), outEdges.keySet()).flatMap(Set::stream).collect(toSet());
+        //return Stream.concat(inEdges.keySet().stream(), outEdges.keySet().stream()).collect(toSet());
     }
 
     @Override
     public String toString() {
-        String graph = "Graph{\n";
+        StringBuilder graph = new StringBuilder("Graph{\n");
         for (Vertex key : outEdges.keySet()) {
             for (Vertex neighbor : outEdges.get(key)) {
-                graph += key.toString() + " --> " + neighbor.toString() + "\n";
+                graph.append(key.toString()).append(" --> ").append(neighbor.toString()).append("\n");
             }
         }
-        return graph + '}';
+        return graph.toString() + '}';
     }
 
-    public Graph removeVertex(Vertex v) {
-        Graph g = new Graph(this);
+    public Graph removeVertex(Vertex v, boolean makeCopy, boolean setForbidden) {
+        Graph g;
+        if (makeCopy) {
+            g = new Graph(this);
+        } else {
+            g = this;
+        }
         g.inEdges.remove(v);
         for (HashSet<Vertex> in : g.inEdges.values()) {
             in.remove(v);
@@ -71,7 +77,17 @@ public class Graph {
         for (HashSet<Vertex> out : g.outEdges.values()) {
             out.remove(v);
         }
-        v.setForbidden(true);
+        if (setForbidden) {
+            v.setForbidden(true);
+        }
+        return g;
+    }
+
+    public Graph reverse() {
+        Graph g = new Graph(this);
+        HashMap<Vertex, HashSet<Vertex>> tmp = g.getOutEdges();
+        g.setOutEdges(g.getInEdges());
+        g.setInEdges(tmp);
         return g;
     }
 }
