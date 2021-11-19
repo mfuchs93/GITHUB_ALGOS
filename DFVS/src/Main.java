@@ -50,7 +50,7 @@ public class Main {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<?> future = executor.submit(() -> {
             try {
-                long time = System.currentTimeMillis();
+                //long time = System.currentTimeMillis();
                 InputStream in = new FileInputStream(args[0]);
                 Graph g = readGraphFromFile(in);
                 HashSet<Vertex> s = DFVS.solve(g);
@@ -58,7 +58,7 @@ public class Main {
                     System.out.println(i.getName());
                 }
                 System.out.println("#recursive steps: " + recursiveSteps);
-                System.out.println("time: " + (System.currentTimeMillis() - time));
+                //System.out.println("time: " + (System.currentTimeMillis() - time));
             } catch (FileNotFoundException e) {
                 System.out.println("File not found '" + args[0] + "'");
             } catch (IOException e) {
@@ -66,7 +66,7 @@ public class Main {
             }
         });
         try {
-            future.get(180000000, TimeUnit.SECONDS);
+            future.get(180, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             future.cancel(true);
         } catch (ExecutionException | InterruptedException e) {

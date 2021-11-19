@@ -2,6 +2,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.stream.Collectors;
 
 public class DFVS {
 
@@ -68,7 +70,11 @@ public class DFVS {
         //  ReductionRules.removeNoneCycleVertex(g);
         ReductionRules.chainingRule(g);
         solution = ReductionRules.chainingClean(g);
-        HashSet<HashSet<Vertex>> cycles = new Cycle(g,SearchType.SHORTEST_CYCLE).getCycles();
+//        HashSet<HashSet<Vertex>> cycles = new Cycle(g,SearchType.SHORTEST_CYCLE).getCycles();
+//        Iterator<HashSet<Vertex>> iter = cycles.iterator();
+//        HashSet<Vertex> intersection = (HashSet<Vertex>) iter.next().stream()
+//                .filter(iter.next()::contains)
+//                .collect(Collectors.toSet());
         int k = 0;
         while (s == null) {
             s = branch(new Graph(g), k);
