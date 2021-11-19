@@ -20,7 +20,7 @@ public class DFVS {
         HashSet<Vertex> s = new HashSet<>();
         if (k < 0) return null;
         HashSet<Graph> subGraphz = new Tarjan(g).SCC();
-        if (subGraphz.isEmpty()) return s; //maybe return solution ??
+        if (subGraphz.isEmpty()) return solution; //maybe return solution ?? yes, because we may have deleted one in chaining
         if (subGraphz.size() > k) return null;
         int counter = 1; // wieviele wurden gelöscht
         int restK = k; // wieviele können wir in den restlichen SubGraphen noch löschen
@@ -66,7 +66,7 @@ public class DFVS {
         ReductionRules.removeNoneCycleVertex(g);
         ReductionRules.chainingRule(g);
         solution = ReductionRules.chainingClean(g);
-        int k = solution.size();
+        int k = 0;
         while (s == null) {
             s = branch(new Graph(g), k);
             k = k + 1;
