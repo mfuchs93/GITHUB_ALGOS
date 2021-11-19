@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -5,22 +6,23 @@ import java.util.HashSet;
 public class DFVS {
 
     public static HashSet<Vertex> branch(Graph g, int k) {
+        Main.countStep();
         if (Thread.interrupted()) {
             System.out.println("Timeout");
             System.exit(1);
         }
         HashSet<Vertex> solution = new HashSet<>();
-        if (k % 2 == 1) {
-            ReductionRules.removeNoneCycleVertex(g);
-            ReductionRules.chainingRule(g);
-            HashSet<Vertex> chainingCleanSet = ReductionRules.chainingClean(g);
-            solution.addAll(chainingCleanSet);
-            k -= chainingCleanSet.size();
+        if (true) {
+           // ReductionRules.removeNoneCycleVertex(g);
         }
+        HashSet<Vertex> chainingCleanSet = ReductionRules.chainingRule(g);
+        solution.addAll(chainingCleanSet);
+        k -= chainingCleanSet.size();
         HashSet<Vertex> s = new HashSet<>();
         if (k < 0) return null;
         HashSet<Graph> subGraphz = new Tarjan(g).SCC();
-        if (subGraphz.isEmpty()) return solution; //maybe return solution ?? yes, because we may have deleted one in chaining
+        if (subGraphz.isEmpty())
+            return solution; //maybe return solution ?? yes, because we may have deleted one in chaining
         if (subGraphz.size() > k) return null;
         int counter = 1; // wieviele wurden gelöscht
         int restK = k; // wieviele können wir in den restlichen SubGraphen noch löschen
@@ -63,9 +65,10 @@ public class DFVS {
     public static HashSet<Vertex> solve(Graph g) {
         HashSet<Vertex> s = null;
         HashSet<Vertex> solution;
-        ReductionRules.removeNoneCycleVertex(g);
+        //  ReductionRules.removeNoneCycleVertex(g);
         ReductionRules.chainingRule(g);
         solution = ReductionRules.chainingClean(g);
+        HashSet<HashSet<Vertex>> cycles = new Cycle(g,SearchType.SHORTEST_CYCLE).getCycles();
         int k = 0;
         while (s == null) {
             s = branch(new Graph(g), k);

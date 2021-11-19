@@ -5,6 +5,11 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Main {
+    private static int recursiveSteps = 0;
+
+    public static void countStep() {
+        recursiveSteps++;
+    }
     public static Graph readGraphFromFile(InputStream inputStream) throws IOException {
         Scanner scanner = new Scanner(inputStream);
         Graph g = new Graph();
@@ -45,12 +50,15 @@ public class Main {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<?> future = executor.submit(() -> {
             try {
+                long time = System.currentTimeMillis();
                 InputStream in = new FileInputStream(args[0]);
                 Graph g = readGraphFromFile(in);
                 HashSet<Vertex> s = DFVS.solve(g);
                 for (Vertex i : s) {
                     System.out.println(i.getName());
                 }
+                System.out.println("#recursive steps: " + recursiveSteps);
+                System.out.println("time: " + (System.currentTimeMillis() - time));
             } catch (FileNotFoundException e) {
                 System.out.println("File not found '" + args[0] + "'");
             } catch (IOException e) {

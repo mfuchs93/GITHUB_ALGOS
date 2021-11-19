@@ -8,6 +8,7 @@ public class Cycle {
     private final Graph g;
     private final HashSet<Vertex> empty = new HashSet<>();
     private HashMap<Vertex, Integer> distTo;
+    private final HashSet<HashSet<Vertex>> cycles = new HashSet<>();
 
     public Cycle(Graph g, SearchType type) {
         this.g = g;
@@ -67,17 +68,18 @@ public class Cycle {
         int length = g.getVertices().size() + 1;
         for (Vertex v : g.getVertices()) {
             bfs(r, v, null);
-            for (Vertex w : g.getOutEdges().get(v)) {
-                if (marked.get(w) && (distTo.get(w) +1) < length) {
+            for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
+                if (marked.getOrDefault(w, false) && (distTo.get(w) +1) < length) {
                     length = distTo.get(w) + 1;
                     cycle = new Stack<>();
                     Vertex x;
+                    cycle.push(v);
                     for (x = w; distTo.get(x) != 0; x = edgeTo.get(x) ) {
                         cycle.push(x);
                     }
                     cycle.push(x);
-                    cycle.push(v);
                 }
+                cycles.add(new HashSet<>(cycle));
             }
         }
     }
@@ -122,5 +124,9 @@ public class Cycle {
         stackToList.addAll(cycle);
         Collections.reverse(stackToList);
         return stackToList;
+    }
+
+    public HashSet<HashSet<Vertex>> getCycles() {
+        return cycles;
     }
 }
