@@ -45,7 +45,7 @@ public class Tarjan {
             }
             if (vertices.size() == 1) {
                 Vertex x = vertices.iterator().next();
-                if (g.getOutEdges().getOrDefault(x, new HashSet<>()).contains(x) && !x.isForbidden()) {
+                if (g.getOutEdges().getOrDefault(x, new HashSet<>()).contains(x)) { //&& !x.isForbidden()
                     buildSCC(vertices);
                 }
             } else if (vertices.size() > 1) {

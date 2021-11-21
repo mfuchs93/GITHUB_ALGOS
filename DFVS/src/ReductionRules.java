@@ -20,6 +20,7 @@ public class ReductionRules {
 
     public static HashSet<Vertex> chainingRule(Graph g) {
         int removed = 0;
+        HashSet<Vertex> s = new HashSet<>();
         for (Vertex v : g.getVertices()) {
             if(v.isForbidden()) break; // return or break??
             if (g.getInEdges().getOrDefault(v, empty).size() == 1 && !g.getInEdges().get(v).contains(v)) {
@@ -30,6 +31,7 @@ public class ReductionRules {
                 }
                 g.removeVertex(v, false, false);
                 removed++;
+                s.add(v);
             } else if (g.getOutEdges().getOrDefault(v, empty).size() == 1 && !g.getOutEdges().get(v).contains(v)) {
                 Vertex w = g.getOutEdges().get(v).iterator().next();
                 for (Vertex u : g.getInEdges().getOrDefault(v, empty)) {
@@ -38,6 +40,7 @@ public class ReductionRules {
                 }
                 g.removeVertex(v, false, false);
                 removed++;
+                s.add(v);
             }
         }
         return removed > 0? chainingClean(g): empty;

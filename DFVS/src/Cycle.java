@@ -78,8 +78,8 @@ public class Cycle {
                         cycle.push(x);
                     }
                     cycle.push(x);
+                    cycles.add(new HashSet<>(cycle));
                 }
-                cycles.add(new HashSet<>(cycle));
             }
         }
     }
@@ -99,9 +99,10 @@ public class Cycle {
             Vertex v = q.poll();
             for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
                 if (w.equals(goal)) {
+                    //System.out.println(start + " " + goal);
                     cycle = new Stack<>();
                     cycle.push(v);
-                    return;
+                    //return;
                 }
                 if (!marked.getOrDefault(w, false)) {
                     edgeTo.put(w, v);
