@@ -1,15 +1,6 @@
-import math
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-
-# TODO: pandas cleanup
-def check_solved(solution):
-    if type(solution) is float:
-        return(15)
-    else:
-        solution = solution.split(",")
-        return(int(solution[0][1:]))
+import re
 
 
 def get_sec(time_str):
@@ -18,110 +9,70 @@ def get_sec(time_str):
     return float(m) * 60 + float(s)
 
 
-def plotting (path):
-    data = pd.read_csv(path, sep='\t', names=["path", "time", "column3", "column4"])
-    print(data)
-    vertices = []
-    complexverti = []
-    complexarcs = []
-    syntheticverti = []
-    syntheticarcs = []
-    times = []
-    ks = []
-    counter = 0
-    complextime = []
-    complexk = []
-    synthetictime = []
-    synthetick = []
-    arcs = []
-    for path in data["path"]:
-        x = path.split("-")
-        print(x)
-        xarcs = x[2].split(".")
-        print(xarcs)
-        vertices.append(int(x[1][2:]))
-        arcs.append(int(xarcs[0][2:]))
-        if "complex" in path:
-            complexverti.append(int(x[1][2:]))
-            complexarcs.append(int(xarcs[0][2:]))
-            complextime.append(get_sec(data.at[counter, "time"][1:8]))
-            complexk.append(check_solved(data.at[counter, "column3"]))
-        if "synthetic" in path:
-            syntheticverti.append(int(x[1][2:]))
-            syntheticarcs.append(int(xarcs[0][2:]))
-            synthetictime.append(get_sec(data.at[counter, "time"][1:8]))
-            synthetick.append(check_solved(data.at[counter, "column3"]))
+def get_nodes(path):
+    path = path.split(" ")[0]
+    nodes = []
+    edges = 0
+    with open(path, "r") as f:
+        for line in f:
+            if "%" not in line:
+                nodes += re.findall(r'\d+', line)
+                edges += 1
+    return len(set(nodes)), edges
 
-        counter += 1
 
-    print(complex, complextime)
-    colors = np.where(data["path"].str.contains("complex"), "red",
-                      np.where(data["path"].str.contains("synthetic"), "green", "NA"))
+def plotting(path):
+    data = pd.read_csv(path, sep='\t', names=["path", "time", "result", "steps"])
+    clean_data = pd.DataFrame(columns=["type", "filename", "nodes", "edges", "k", "time", "steps"])
+    for index, row in data.iterrows():
+        if not row["result"] == " 1 ":
+            if "synthetic" in row["path"]:
+                type = "synthetic"
+            else:
+                type = "complex"
+            filename = str(row["path"].split("/")[3].split(" ")[0])
+            nodes, edges = get_nodes(row["path"])
+            with open("../instances/optimal_solution_sizes.txt", "r") as f:
+                for line in f:
+                    if filename in line:
+                        k = int(line.split()[1])
+            if "timelimit" in row["path"]:
+                time = 200
+            else:
+                time = (get_sec(row["time"][1:8]))
+            if not pd.isna(row["steps"]):
+                steps = int(re.findall(r'\d+', row["steps"])[0])
+            else:
+                steps = -1
+            series = pd.Series([type, filename, nodes, edges, k, time, steps], index=clean_data.columns)
+            clean_data = clean_data.append(series, ignore_index=True)
+    complex = clean_data[clean_data["type"] == "complex"]
+    synthetic = clean_data[clean_data["type"] == "synthetic"]
 
-    for time in data["time"]:
-        times.append(get_sec(time[1:8]))
-    for k in data["column3"]:
-        ks.append(check_solved(k))
-
-    print(ks)
     plt.style.use('dark_background')
-    plt.xlabel("vertices")
+    plt.xlabel("k")
     plt.ylabel("time in s")
+    plt.yscale("log")
+    plt.xlim(0, 30)
+    # plt.xscale("log")
     plt.title("All Graphs Verti")
-    plt.scatter(vertices, times, marker="x")
+    plt.scatter(complex["k"], complex["time"], marker="x", c="yellow")
+    plt.plot([0, 250], [180, 180])
+    # plt.boxplot(complex["k"], complex["time"])
     plt.show()
 
-    plt.xlabel("arcs")
-    plt.ylabel("time in s")
-    plt.title("All Graphs Arcs")
-    plt.scatter(arcs, times, marker="x")
-    plt.show()
-
+    plt.style.use('dark_background')
     plt.xlabel("k")
     plt.ylabel("time in s")
-    plt.title("All Graphs k")
-    plt.scatter(ks, times, marker="x")
+    plt.yscale("log")
+    plt.xscale("log")
+    plt.title("All Graphs Verti")
+    plt.scatter(complex["steps"], complex["time"], marker="x", c="yellow")
+    plt.scatter(synthetic["steps"], synthetic["time"], marker="x", c="red")
+    plt.plot([0, 250], [180, 180])
     plt.show()
-
-    plt.xlabel("vertices")
-    plt.ylabel("time in s")
-    plt.title("Complex Verti")
-    plt.scatter(complexverti, complextime, c="red", marker="x")
-    plt.show()
-
-    plt.xlabel("arcs")
-    plt.ylabel("time in s")
-    plt.title("Complex Arcs")
-    plt.scatter(complexarcs, complextime, c="red", marker="x")
-    plt.show()
-
-    plt.xlabel("k")
-    plt.ylabel("time in s")
-    plt.title("Complex K")
-    plt.scatter(complexk, complextime, c="red", marker="x")
-    plt.show()
-
-    plt.xlabel("vertices")
-    plt.ylabel("time in s")
-    plt.title("Synthetic Verti")
-    plt.scatter(syntheticverti, synthetictime, c="green", marker="x")
-    plt.show()
-
-    plt.xlabel("arcs")
-    plt.ylabel("time in s")
-    plt.title("Synthetic Arcs")
-    plt.scatter(syntheticarcs, synthetictime, c="green", marker="x")
-    plt.show()
-
-    plt.xlabel("k")
-    plt.ylabel("time in s")
-    plt.title("Synthetic K")
-    plt.scatter(synthetick, synthetictime, c="green", marker="x")
-    plt.show()
-
-
 
 
 if __name__ == '__main__':
-    path = "DFVS.jar.res"
+    path = "DFVS_tarjan_forbidden_reduction_shortCycles.jar.res"
     plotting(path)
