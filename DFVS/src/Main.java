@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class Main {
@@ -39,6 +37,7 @@ public class Main {
                 g.getInEdges().get(target).add(start);
             }
         }
+        g.setId_counter(id_counter);
         return g;
     }
 
@@ -53,6 +52,8 @@ public class Main {
                 //long time = System.currentTimeMillis();
                 InputStream in = new FileInputStream(args[0]);
                 Graph g = readGraphFromFile(in);
+                Flower fl = new Flower(g);
+                List<Vertex> flowers = fl.petalRule(1);
                 HashSet<Vertex> s = DFVS.solve(g);
                 for (Vertex i : s) {
                     System.out.println(i.getName());

@@ -3,10 +3,13 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 
-public class Graph implements Comparable<Graph>{
+public class Graph implements Comparable<Graph> {
+    HashSet<Vertex> empty = new HashSet<>();
 
     private HashMap<Vertex, HashSet<Vertex>> inEdges = new HashMap<>();
     private HashMap<Vertex, HashSet<Vertex>> outEdges = new HashMap<>();
+
+    private int id_counter;
 
     public Graph() {
     }
@@ -20,6 +23,7 @@ public class Graph implements Comparable<Graph>{
             this.outEdges.put(v, new HashSet<>());
             this.outEdges.get(v).addAll(graph.getOutEdges().get(v));
         }
+        this.id_counter = graph.id_counter;
     }
 
     public HashMap<Vertex, HashSet<Vertex>> getInEdges() {
@@ -48,7 +52,6 @@ public class Graph implements Comparable<Graph>{
 
     public Set<Vertex> getVertices() {
         return Stream.of(inEdges.keySet(), outEdges.keySet()).flatMap(Set::stream).collect(toSet());
-        //return Stream.concat(inEdges.keySet().stream(), outEdges.keySet().stream()).collect(toSet());
     }
 
     @Override
@@ -98,5 +101,38 @@ public class Graph implements Comparable<Graph>{
         } else {
             return 1;
         }
+    }
+
+    public void splitVertex(Vertex v) {
+        //new v+ and v- vertices
+        Vertex v_plus = new Vertex(this.id_counter++, v.getName());
+        v_plus.setPolarity('+');
+        v_plus.setParent(v);
+        Vertex v_minus = new Vertex(this.id_counter++, v.getName());
+        v_minus.setPolarity('-');
+        v_minus.setParent(v);
+        //save in and out edges of v
+        this.outEdges.put(v_plus, this.outEdges.getOrDefault(v, empty));
+        for (Vertex w : this.outEdges.get(v_plus)) {
+            this.inEdges.get(w).add(v_plus);
+        }
+        this.inEdges.put(v_minus, this.inEdges.getOrDefault(v, empty));
+        for (Vertex w : this.inEdges.get(v_minus)) {
+            this.outEdges.get(w).add(v_minus);
+        }
+        //remove v
+        this.removeVertex(v, false, false);
+
+        this.outEdges.put(v_minus, new HashSet<>(Arrays.asList(v_plus)));
+        this.inEdges.put(v_plus, new HashSet<>(Arrays.asList(v_minus)));
+
+    }
+
+    public int getId_counter() {
+        return id_counter;
+    }
+
+    public void setId_counter(int id_counter) {
+        this.id_counter = id_counter;
     }
 }

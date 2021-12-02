@@ -6,10 +6,49 @@ public class Vertex {
     private int dfsIndex;
     private int dfsLowLink;
     private boolean forbidden;
+    private char polarity;
+
+    private int maxPetal;
+    private int petal;
+
+    public Vertex getParent() {
+        return parent;
+    }
+
+    public void setParent(Vertex parent) {
+        this.parent = parent;
+    }
+
+    private Vertex parent;
+
+    public int getMaxPetal() {
+        return maxPetal;
+    }
+
+    public void setMaxPetal(int maxPetal) {
+        this.maxPetal = maxPetal;
+    }
+
+    public int getPetal() {
+        return petal;
+    }
+
+    public void setPetal(int petal) {
+        this.petal = petal;
+    }
+
+    public char getPolarity() {
+        return polarity;
+    }
+
+    public void setPolarity(char polarity) {
+        this.polarity = polarity;
+    }
 
     public Vertex(int id, String name) {
         this.id = id;
         this.name = name;
+        this.polarity = '.';
     }
 
     public boolean isForbidden() {
@@ -54,7 +93,7 @@ public class Vertex {
 
     @Override
     public String toString() {
-        return name;
+        return name + polarity;
     }
 
     @Override
@@ -62,11 +101,11 @@ public class Vertex {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vertex vertex = (Vertex) o;
-        return getId() == vertex.getId();
+        return getId() == vertex.getId() && getPolarity() == vertex.getPolarity();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getId(), getPolarity());
     }
 }
