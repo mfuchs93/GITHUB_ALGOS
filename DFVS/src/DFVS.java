@@ -11,6 +11,7 @@ public class DFVS {
             System.out.println("Timeout");
             System.exit(1);
         }
+        //if (!verticesToDelete.isEmpty()) System.out.println(verticesToDelete);
         HashSet<Vertex> solution = new HashSet<>();
         solution.addAll(verticesToDelete);
         verticesToDelete.forEach(v -> g.removeVertex(v, false, false));
@@ -22,6 +23,7 @@ public class DFVS {
         if (k < 0) return null;
 
         ArrayList<Vertex> cycle = new Cycle(g, SearchType.SHORTEST_CYCLE).cycle();
+        if (cycle.isEmpty()) return solution;
         cycle.removeIf(Vertex::isForbidden);
         if (cycle.isEmpty()) return null;
         for (Vertex vertex : cycle) {
@@ -33,11 +35,13 @@ public class DFVS {
                 }
             }
         }
-        solution.addAll(s);
         cycle.forEach(v -> v.setForbidden(false));
-        
-        
-        
+        if (s == null) {
+            return null;
+        }
+        solution.addAll(s);
+
+
 //        HashSet<Graph> subGraphz = new Tarjan(g).SCC();
 //        if (subGraphz.isEmpty())
 //            return solution; //return solution, because we may have deleted one in chaining
@@ -84,14 +88,18 @@ public class DFVS {
         HashSet<Vertex> s = null;
         HashSet<Vertex> solution;
         solution = ReductionRules.chainingRule(subGraph);
+        //System.out.println(solution);
         // HashSet<HashSet<Vertex>> cycles = new Cycle(g,SearchType.SHORTEST_CYCLE).getCycles();
         Flower flower = new Flower(subGraph);
-
+        ArrayList<Vertex> verticesToDelete = new ArrayList<>();
         int k = 0;
         while (s == null) {
-            ArrayList<Vertex> verticesToDelete = flower.petalRule(k);
-            if (verticesToDelete.size() > k) continue;
-            s = branch(new Graph(subGraph), k - verticesToDelete.size(), verticesToDelete);
+            if (k == 0 || verticesToDelete.size() > 0) {
+                verticesToDelete = flower.petalRule(k);
+            }
+            if (verticesToDelete.size() <= k){
+                s = branch(new Graph(subGraph), k - verticesToDelete.size(), verticesToDelete);
+            }
             flower.resetPetals();
             k = k + 1;
         }
