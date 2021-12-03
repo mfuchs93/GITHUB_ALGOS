@@ -21,11 +21,11 @@ public class Flower {
         this.resetPetals();
     }
 
-    public List<Vertex> petalRule(int k) {
+    public ArrayList<Vertex> petalRule(int k) {
         ArrayList<Vertex> verticesToRemove = new ArrayList<>();
         Vertex removeVertex = findRemoveVertex(k);
         while (removeVertex != null) {
-            this.g.removeVertex(removeVertex, false, false);
+            //this.g.removeVertex(removeVertex, false, false);
             this.g.getVertices().forEach(x -> x.setPetal(x.getPetal() - 1));
             verticesToRemove.add(removeVertex);
             removeVertex = findRemoveVertex(k);

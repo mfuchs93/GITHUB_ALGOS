@@ -52,8 +52,6 @@ public class Main {
                 //long time = System.currentTimeMillis();
                 InputStream in = new FileInputStream(args[0]);
                 Graph g = readGraphFromFile(in);
-                Flower fl = new Flower(g);
-                List<Vertex> flowers = fl.petalRule(1);
                 HashSet<Vertex> s = DFVS.solve(g);
                 for (Vertex i : s) {
                     System.out.println(i.getName());
