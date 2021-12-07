@@ -94,6 +94,7 @@ public class DFVS {
         ArrayList<Vertex> verticesToDelete = new ArrayList<>();
         int k = 0;
         while (s == null) {
+            //System.out.println(k);
             if (k == 0 || verticesToDelete.size() > 0) {
                 verticesToDelete = flower.petalRule(k);
             }
@@ -111,10 +112,17 @@ public class DFVS {
         HashSet<Vertex> s = null;
         HashSet<Vertex> solution = null;
         solution = ReductionRules.chainingRule(g);
-        HashSet<Graph> subGraphz = new Tarjan(g).SCC();
-        if (subGraphz.isEmpty())
+        Clique c = new Clique(g, 3);
+        HashSet<Vertex> verticesToDelete = c.triangleRule();
+        for (Vertex v :
+                verticesToDelete) {
+            g.removeVertex(v, false, false);
+        }
+        solution.addAll(verticesToDelete);
+        solution.addAll(ReductionRules.chainingRule(g));
+        ArrayList<Graph> subGraphs = new Tarjan(g).SCC();
+        if (subGraphs.isEmpty())
             return solution;
-        ArrayList<Graph> subGraphs = new ArrayList<>(subGraphz);
         Collections.sort(subGraphs);
         for (Graph subGraph :
                 subGraphs) {

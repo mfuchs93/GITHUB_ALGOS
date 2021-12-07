@@ -8,7 +8,7 @@ public class Tarjan {
     private int index;
     private final ArrayList<Vertex> unvisitedVertices;
     private final Stack<Vertex> verticesInProgress;
-    private final HashSet<Graph> subGraphs = new HashSet<>();
+    private final ArrayList<Graph> subGraphs = new ArrayList<>();
     private int k;
 
     public Tarjan(Graph g) {
@@ -79,7 +79,7 @@ public class Tarjan {
         subGraphs.add(subGraph);
     }
 
-    public HashSet<Graph> SCC() {
+    public ArrayList<Graph> SCC() {
         return subGraphs;
     }
 }
