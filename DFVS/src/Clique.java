@@ -40,7 +40,7 @@ public class Clique {
                 d) {
             if (i > 0) this.n++;
         }
-        //findCliques(0, 1, k);
+        //findCliques(0, 1, k, false);
     }
 
     public void convertGraph() {
@@ -59,7 +59,7 @@ public class Clique {
     }
 
     // Function to check if the given set of vertices
-// in store array is a clique or not
+    // in store array is a clique or not
     private boolean is_clique(int b) {
         // Run a loop for all the set of edges
         // for the select vertex
@@ -117,6 +117,10 @@ public class Clique {
             }
     }
 
+    public void setK(int k) {
+        this.k = k;
+    }
+
     public HashSet<Vertex> triangleRule() {
         findCliques(0, 1, this.k, false);
         boolean[] shouldBeDeleted = new boolean[this.MAX];
@@ -127,23 +131,16 @@ public class Clique {
             Vertex u = iter.next();
             Vertex v = iter.next();
             Vertex w = iter.next();
-            //calculate number of connected edges to vertices
-            int degU = this.g.getInDegree(u) + this.g.getOutDegree(u);
-            int degV = this.g.getInDegree(v) + this.g.getOutDegree(v);
-            int degW = this.g.getInDegree(w) + this.g.getOutDegree(w);
-            //if one vertex has 2*(k-1) edges, delete the other two
-//            if (degU == 2 * (this.k - 1)) {
-//                shouldBeDeleted[v.getId()] = true;
-//                shouldBeDeleted[w.getId()] = true;
-//            } else if (degV == 2 * (this.k - 1)) {
-//                shouldBeDeleted[u.getId()] = true;
-//                shouldBeDeleted[w.getId()] = true;
-//            } else if (degW == 2 * (this.k - 1)) {
-//                shouldBeDeleted[u.getId()] = true;
-//                shouldBeDeleted[v.getId()] = true;
-//            }
-            //return list of vertices to delete
+            Vertex x = null;
+            int outX = 0;
+            int inX = 0;
+            if (this.k == 4) {
+                x = iter.next();
+                outX = this.g.getOutDegree(x);
+                inX = this.g.getInDegree(x);
+            }
 
+            //return list of vertices to delete
             int outU = this.g.getOutDegree(u);
             int outV = this.g.getOutDegree(v);
             int outW = this.g.getOutDegree(w);
@@ -154,41 +151,24 @@ public class Clique {
             if (outU == this.k - 1 || inU == this.k - 1) {
                 shouldBeDeleted[v.getId()] = true;
                 shouldBeDeleted[w.getId()] = true;
+                if (this.k == 4) shouldBeDeleted[x.getId()] = true;
             } else if (outV == this.k - 1 || inV == this.k - 1) {
                 shouldBeDeleted[u.getId()] = true;
                 shouldBeDeleted[w.getId()] = true;
+                if (this.k == 4) shouldBeDeleted[x.getId()] = true;
             } else if (outW == this.k - 1 || inW == this.k - 1) {
                 shouldBeDeleted[u.getId()] = true;
                 shouldBeDeleted[v.getId()] = true;
+                if (this.k == 4) shouldBeDeleted[x.getId()] = true;
+            } else if (outX == this.k - 1 || inX == this.k - 1) {
+                shouldBeDeleted[u.getId()] = true;
+                shouldBeDeleted[v.getId()] = true;
+                shouldBeDeleted[w.getId()] = true;
             }
             if (shouldBeDeleted[u.getId()]) verticesToDelete.add(u);
             if (shouldBeDeleted[v.getId()]) verticesToDelete.add(v);
             if (shouldBeDeleted[w.getId()] && verticesToDelete.size() < k - 1) verticesToDelete.add(w);
-
-//            boolean onlyInU = false;
-//            boolean onlyOutU = false;
-//
-//            boolean onlyInV = false;
-//            boolean onlyOutV = false;
-//
-//            boolean onlyInW = false;
-//            boolean onlyOutW = false;
-//
-//
-//            if (degU >2 * (this.k - 1)) {
-//                if (outU == this.k-1) onlyInU = true;
-//                else onlyOutU = true;
-//            }
-//            if (degV >2 * (this.k - 1)) {
-//                if (outV == this.k-1) onlyInV = true;
-//                else onlyOutV = true;
-//            }
-//            if (degW >2 * (this.k - 1)) {
-//                if (outW == this.k-1) onlyInW = true;
-//                else onlyOutW = true;
-//            }
-
-
+            if (x != null && shouldBeDeleted[x.getId()] && verticesToDelete.size() < k - 1) verticesToDelete.add(x);
         }
         return verticesToDelete;
     }

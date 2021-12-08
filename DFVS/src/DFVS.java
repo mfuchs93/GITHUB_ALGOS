@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 public class DFVS {
     public static ArrayList<Vertex> empty = new ArrayList<>();
@@ -12,8 +13,7 @@ public class DFVS {
             System.exit(1);
         }
         //if (!verticesToDelete.isEmpty()) System.out.println(verticesToDelete);
-        HashSet<Vertex> solution = new HashSet<>();
-        solution.addAll(verticesToDelete);
+        HashSet<Vertex> solution = new HashSet<>(verticesToDelete);
         verticesToDelete.forEach(v -> g.removeVertex(v, false, false));
 //        ReductionRules.removeNoneCycleVertex(g);
 //        HashSet<Vertex> chainingCleanSet = ReductionRules.chainingRule(g);
@@ -27,7 +27,7 @@ public class DFVS {
         cycle.removeIf(Vertex::isForbidden);
         if (cycle.isEmpty()) return null;
         for (Vertex vertex : cycle) {
-            if (!vertex.isForbidden()) { //nur löschen wenn nicht verboten
+            if (!vertex.isForbidden()) { //only delete if not forbidden
                 s = branch(g.removeVertex(vertex, true, true), k - 1, empty);
                 if (s != null) {
                     s.add(vertex);
@@ -42,22 +42,21 @@ public class DFVS {
         solution.addAll(s);
 
 
-//        HashSet<Graph> subGraphz = new Tarjan(g).SCC();
-//        if (subGraphz.isEmpty())
+//        HashSet<Graph> subGraphs = new Tarjan(g).SCC();
+//        if (subGraphs.isEmpty())
 //            return solution; //return solution, because we may have deleted one in chaining
-//        if (subGraphz.size() > k) return null;
-//        int counter = 1; // wieviele wurden gelöscht
-//        int restK = k; // wieviele können wir in den restlichen SubGraphen noch löschen
-//        ArrayList<Graph> subGraphs = new ArrayList<>(subGraphz);
+//        if (subGraphs.size() > k) return null;
+//        int counter = 1; // how many we have deleted for this subGraph
+//        int restK = k; // how many we can delete in the remaining subGraphs
 //        Collections.sort(subGraphs);
 //        for (Graph subGraph :
 //                subGraphs) {
 //            ArrayList<Vertex> cycle = new Cycle(subGraph, SearchType.SHORTEST_CYCLE).cycle();
 //            cycle.removeIf(Vertex::isForbidden);
-//            if (cycle.isEmpty()) return null; // wenn alle verboten return
+//            if (cycle.isEmpty()) return null; // if all forbidden return
 //            while (restK - counter >= 0) {
 //                for (Vertex vertex : cycle) {
-//                    if (!vertex.isForbidden()) { //nur löschen wenn nicht verboten
+//                    if (!vertex.isForbidden()) { //only delete if not forbidden
 //                        s = branch(subGraph.removeVertex(vertex, true, true), counter - 1, verticesToDelete);
 //                        if (s != null) {
 //                            s.add(vertex);
@@ -88,7 +87,6 @@ public class DFVS {
         HashSet<Vertex> s = null;
         HashSet<Vertex> solution;
         solution = ReductionRules.chainingRule(subGraph);
-        //System.out.println(solution);
         // HashSet<HashSet<Vertex>> cycles = new Cycle(g,SearchType.SHORTEST_CYCLE).getCycles();
         Flower flower = new Flower(subGraph);
         ArrayList<Vertex> verticesToDelete = new ArrayList<>();
@@ -98,7 +96,7 @@ public class DFVS {
             if (k == 0 || verticesToDelete.size() > 0) {
                 verticesToDelete = flower.petalRule(k);
             }
-            if (verticesToDelete.size() <= k){
+            if (verticesToDelete.size() <= k) {
                 s = branch(new Graph(subGraph), k - verticesToDelete.size(), verticesToDelete);
             }
             flower.resetPetals();
@@ -109,17 +107,46 @@ public class DFVS {
     }
 
     public static HashSet<Vertex> solve(Graph g) {
-        HashSet<Vertex> s = null;
-        HashSet<Vertex> solution = null;
+        HashSet<Vertex> s;
+        HashSet<Vertex> solution;
         solution = ReductionRules.chainingRule(g);
-        Clique c = new Clique(g, 3);
-        HashSet<Vertex> verticesToDelete = c.triangleRule();
-        for (Vertex v :
-                verticesToDelete) {
-            g.removeVertex(v, false, false);
+        int cliqueSize = 4;
+        Clique c = new Clique(g, cliqueSize);
+        while (true) {
+            HashSet<Vertex> verticesToDelete = c.triangleRule();
+            HashSet<Vertex> distinctCliqueVertices = new HashSet<>();
+            c.getCliques().forEach(distinctCliqueVertices::addAll);
+            //System.out.println("distinct vertices: "+ distinctCliqueVertices.size());
+            HashSet<HashSet<Vertex>> noIntersections = new HashSet<HashSet<Vertex>>();
+            for (HashSet<Vertex> s1:
+            c.getCliques()){
+                boolean hasIntersection = false;
+                HashSet<Vertex> intersection = new HashSet<>(s1);
+                for (HashSet<Vertex> s2 :
+                     c.getCliques().stream().filter(x -> x != s1).collect(Collectors.toSet())) {
+                    if (s1.stream().anyMatch(s2::contains)) {
+                        hasIntersection = true;
+                        break;
+                    }
+                }
+                if (!hasIntersection) noIntersections.add(s1);
+                hasIntersection = false;
+            }
+            if (verticesToDelete.isEmpty()) {
+                if (cliqueSize == 4) {
+                    c.setK(3);
+                    cliqueSize = 3;
+                    continue;
+                }
+                break;
+            }
+            for (Vertex v :
+                    verticesToDelete) {
+                g.removeVertex(v, false, false);
+            }
+            solution.addAll(verticesToDelete);
+            solution.addAll(ReductionRules.chainingRule(g));
         }
-        solution.addAll(verticesToDelete);
-        solution.addAll(ReductionRules.chainingRule(g));
         ArrayList<Graph> subGraphs = new Tarjan(g).SCC();
         if (subGraphs.isEmpty())
             return solution;
