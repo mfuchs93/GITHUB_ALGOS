@@ -23,22 +23,21 @@ public class Flower {
 
     public ArrayList<Vertex> petalRule(int k) {
         ArrayList<Vertex> verticesToRemove = new ArrayList<>();
-        Vertex removeVertex = findRemoveVertex(k);
+        Vertex removeVertex = findRemoveVertex(k, verticesToRemove);
         while (removeVertex != null) {
-            //this.g.removeVertex(removeVertex, false, false);
             this.g.getVertices().forEach(x -> x.setPetal(x.getPetal() - 1));
             verticesToRemove.add(removeVertex);
-            removeVertex = findRemoveVertex(k);
+            removeVertex = findRemoveVertex(k, verticesToRemove);
         }
         return verticesToRemove;
     }
 
-    private Vertex findRemoveVertex(int k) {
+    private Vertex findRemoveVertex(int k,ArrayList<Vertex> verticesToRemove) {
         Vertex removeVertex = null;
         for (Vertex v :
                 this.g.getVertices()) {
             if (v.getPetal() > k) {
-                if(removeVertex == null || removeVertex.getPetal() > v.getPetal()) removeVertex = v;
+                if(!verticesToRemove.contains(v) && (removeVertex == null || removeVertex.getPetal() > v.getPetal())) removeVertex = v;
             }
         }
         return removeVertex;
@@ -79,17 +78,17 @@ public class Flower {
     }
 
     //https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
-    private boolean bfs(int rGraph[][], int s, int t, int parent[]) {
+    private boolean bfs(int[][] rGraph, int s, int t, int[] parent) {
         // Create a visited array and mark all vertices as
         // not visited
-        boolean visited[] = new boolean[this.vertexCount];
+        boolean[] visited = new boolean[this.vertexCount];
         for (int i = 0; i < this.vertexCount; ++i)
             visited[i] = false;
 
         // Create a queue, enqueue source vertex and mark
         // source vertex as visited
         LinkedList<Integer> queue
-                = new LinkedList<Integer>();
+                = new LinkedList<>();
         queue.add(s);
         visited[s] = true;
         parent[s] = -1;
@@ -99,7 +98,7 @@ public class Flower {
             int u = queue.poll();
 
             for (int v = 0; v < this.vertexCount; v++) {
-                if (visited[v] == false
+                if (!visited[v]
                         && rGraph[u][v] > 0) {
                     // If we find a connection to the sink
                     // node, then there is no point in BFS
@@ -124,7 +123,7 @@ public class Flower {
     //https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
     // Returns tne maximum flow from s to t in the given
     // graph
-    int fordFulkerson(int graph[][], int s, int t) {
+    int fordFulkerson(int[][] graph, int s, int t) {
         int u, v;
 
         // Create a residual graph and fill the residual
@@ -135,14 +134,14 @@ public class Flower {
         // residual capacity of edge from i to j (if there
         // is an edge. If rGraph[i][j] is 0, then there is
         // not)
-        int rGraph[][] = new int[this.vertexCount][this.vertexCount];
+        int[][] rGraph = new int[this.vertexCount][this.vertexCount];
 
         for (u = 0; u < this.vertexCount; u++)
             for (v = 0; v < this.vertexCount; v++)
                 rGraph[u][v] = graph[u][v];
 
         // This array is filled by BFS and to store path
-        int parent[] = new int[this.vertexCount];
+        int[] parent = new int[this.vertexCount];
 
         int max_flow = 0; // There is no flow initially
 

@@ -1,29 +1,21 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Clique {
-    private Graph g;
+    private final Graph g;
     //size of cliques to find
     private int k;
     //mapping id to Vertex object
-    private Vertex[] vertices;
-
-    public ArrayList<HashSet<Vertex>> getCliques() {
-        return cliques;
-    }
-
+    private final Vertex[] vertices;
     ArrayList<HashSet<Vertex>> cliques;
-
-    private int MAX;
-
+    private final int MAX;
     // Stores the vertices
-    private int[] store;
+    private final int[] store;
     private int n;
-
     // Graph
-    private int[][] graph;
-
+    private final int[][] graph;
     // Degree of the vertices
-    private int[] d;
+    private final int[] d;
 
     public Clique(Graph g, int k) {
         this.g = g;
@@ -34,7 +26,6 @@ public class Clique {
         this.d = new int[MAX];
         this.n = 0;
         this.vertices = new Vertex[MAX];
-        this.cliques = new ArrayList<>();
         convertGraph();
         for (int i :
                 d) {
@@ -56,6 +47,10 @@ public class Clique {
                 }
             }
         }
+    }
+
+    public ArrayList<HashSet<Vertex>> getCliques() {
+        return cliques;
     }
 
     // Function to check if the given set of vertices
@@ -85,7 +80,7 @@ public class Clique {
     }
 
     // Function to find all the cliques of size s
-    private void findCliques(int i, int l, int s, boolean findOne) {
+    public void findCliques(int i, int l, int s, boolean findOne) {
         // Check if any vertices from i+1 can be inserted
         for (int j = i + 1; j <= n - (s - l); j++)
 
@@ -121,55 +116,32 @@ public class Clique {
         this.k = k;
     }
 
-    public HashSet<Vertex> triangleRule() {
+    public void removeVertex(Vertex v) {
+        for (int i = 0; i < this.MAX; i++) {
+            this.graph[i][v.getId() + 1] = 0;
+            this.graph[v.getId() + 1][i] = 0;
+        }
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    public HashSet<Vertex> cliqueRule() {
+        this.cliques = new ArrayList<>();
         findCliques(0, 1, this.k, false);
-        boolean[] shouldBeDeleted = new boolean[this.MAX];
         HashSet<Vertex> verticesToDelete = new HashSet<>();
         for (HashSet<Vertex> clique :
                 cliques) {
-            Iterator<Vertex> iter = clique.iterator();
-            Vertex u = iter.next();
-            Vertex v = iter.next();
-            Vertex w = iter.next();
-            Vertex x = null;
-            int outX = 0;
-            int inX = 0;
-            if (this.k == 4) {
-                x = iter.next();
-                outX = this.g.getOutDegree(x);
-                inX = this.g.getInDegree(x);
+            for (Vertex v :
+                    clique) {
+                if (this.g.getOutDegree(v) == this.k - 1 || this.g.getInDegree(v) == this.k - 1) {
+                    verticesToDelete.addAll(clique.stream().filter(vertex -> vertex != v).collect(Collectors.toSet()));
+                    break;
+                }
             }
-
-            //return list of vertices to delete
-            int outU = this.g.getOutDegree(u);
-            int outV = this.g.getOutDegree(v);
-            int outW = this.g.getOutDegree(w);
-            int inU = this.g.getInDegree(u);
-            int inV = this.g.getInDegree(v);
-            int inW = this.g.getInDegree(w);
-
-            if (outU == this.k - 1 || inU == this.k - 1) {
-                shouldBeDeleted[v.getId()] = true;
-                shouldBeDeleted[w.getId()] = true;
-                if (this.k == 4) shouldBeDeleted[x.getId()] = true;
-            } else if (outV == this.k - 1 || inV == this.k - 1) {
-                shouldBeDeleted[u.getId()] = true;
-                shouldBeDeleted[w.getId()] = true;
-                if (this.k == 4) shouldBeDeleted[x.getId()] = true;
-            } else if (outW == this.k - 1 || inW == this.k - 1) {
-                shouldBeDeleted[u.getId()] = true;
-                shouldBeDeleted[v.getId()] = true;
-                if (this.k == 4) shouldBeDeleted[x.getId()] = true;
-            } else if (outX == this.k - 1 || inX == this.k - 1) {
-                shouldBeDeleted[u.getId()] = true;
-                shouldBeDeleted[v.getId()] = true;
-                shouldBeDeleted[w.getId()] = true;
-            }
-            if (shouldBeDeleted[u.getId()]) verticesToDelete.add(u);
-            if (shouldBeDeleted[v.getId()]) verticesToDelete.add(v);
-            if (shouldBeDeleted[w.getId()] && verticesToDelete.size() < k - 1) verticesToDelete.add(w);
-            if (x != null && shouldBeDeleted[x.getId()] && verticesToDelete.size() < k - 1) verticesToDelete.add(x);
         }
+        verticesToDelete.forEach(this::removeVertex);
         return verticesToDelete;
     }
 }

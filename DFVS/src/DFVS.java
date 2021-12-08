@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -110,18 +111,23 @@ public class DFVS {
         HashSet<Vertex> s;
         HashSet<Vertex> solution;
         solution = ReductionRules.chainingRule(g);
-        int cliqueSize = 4;
-        Clique c = new Clique(g, cliqueSize);
+        Clique c = new Clique(g, 10);
         while (true) {
-            HashSet<Vertex> verticesToDelete = c.triangleRule();
+            HashMap<Integer, ArrayList<HashSet<Vertex>>> cliques = new HashMap<>();
+//            for (int i = 2; i<=10; i++){
+//                c.setK(i);
+//                c.cliqueRule();
+//                if (c.getCliques().size() == 0) break;
+//                cliques.put(i, c.getCliques());
+//            }
+            HashSet<Vertex> verticesToDelete = c.cliqueRule();
             HashSet<Vertex> distinctCliqueVertices = new HashSet<>();
             c.getCliques().forEach(distinctCliqueVertices::addAll);
-            //System.out.println("distinct vertices: "+ distinctCliqueVertices.size());
-            HashSet<HashSet<Vertex>> noIntersections = new HashSet<HashSet<Vertex>>();
+            System.out.println("#distinct vertices: "+ distinctCliqueVertices.size());
+            HashSet<HashSet<Vertex>> noIntersections = new HashSet<>();
             for (HashSet<Vertex> s1:
             c.getCliques()){
                 boolean hasIntersection = false;
-                HashSet<Vertex> intersection = new HashSet<>(s1);
                 for (HashSet<Vertex> s2 :
                      c.getCliques().stream().filter(x -> x != s1).collect(Collectors.toSet())) {
                     if (s1.stream().anyMatch(s2::contains)) {
@@ -130,12 +136,10 @@ public class DFVS {
                     }
                 }
                 if (!hasIntersection) noIntersections.add(s1);
-                hasIntersection = false;
             }
             if (verticesToDelete.isEmpty()) {
-                if (cliqueSize == 4) {
-                    c.setK(3);
-                    cliqueSize = 3;
+                if (c.getK() >2) {
+                    c.setK(c.getK()-1);
                     continue;
                 }
                 break;
