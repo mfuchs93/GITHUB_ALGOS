@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Cycle {
+    private final boolean allCycles;
     private HashMap<Vertex, Boolean> marked;
     private HashMap<Vertex, Vertex> edgeTo;
     private HashMap<Vertex, Boolean> onStack;
@@ -10,9 +11,9 @@ public class Cycle {
     private HashMap<Vertex, Integer> distTo;
     private final HashSet<HashSet<Vertex>> cycles = new HashSet<>();
 
-    public Cycle(Graph g, SearchType type) {
+    public Cycle(Graph g, SearchType type, boolean allCycles) {
         this.g = g;
-
+        this.allCycles = allCycles;
         switch (type) {
             case DFS -> {
                 onStack = new HashMap<>();
@@ -24,12 +25,13 @@ public class Cycle {
                     }
                 }
             }
-            case SHORTEST_CYCLE -> shortestCycle();
+            case SHORT_CYCLE -> shortCycle(this.allCycles);
         }
     }
 
-    public Cycle(Graph g, Vertex v, SearchType type) {
+    public Cycle(Graph g, Vertex v, SearchType type, boolean allCycles) {
         this.g = g;
+        this.allCycles = allCycles;
 
         switch (type) {
             case DFS -> {
@@ -46,7 +48,7 @@ public class Cycle {
         onStack.put(v, true);
         marked.put(v, true);
         for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
-            if (hasCycle()) {
+            if (false){//if (hasCycle()) {
                 return;
             } else if (!marked.getOrDefault(w, false)) {
                 edgeTo.put(w, v);
@@ -58,27 +60,34 @@ public class Cycle {
                 }
                 cycle.push(w);
                 cycle.push(v);
+                cycles.add(new HashSet<>(cycle));
             }
         }
         onStack.put(v, false);
     }
 
-    public void shortestCycle() {
+    public void shortCycle(boolean allCycles) {
         Graph r = g.reverse();
         int length = g.getVertices().size() + 1;
         for (Vertex v : g.getVertices()) {
             bfs(r, v, null);
             for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
-                if (marked.getOrDefault(w, false) && (distTo.get(w) +1) < length) {
-                    length = distTo.get(w) + 1;
+                if (marked.getOrDefault(w, false) && (distTo.get(w) + 1) < length) {
                     cycle = new Stack<>();
                     Vertex x;
                     cycle.push(v);
-                    for (x = w; distTo.get(x) != 0; x = edgeTo.get(x) ) {
+                    for (x = w; distTo.get(x) != 0; x = edgeTo.get(x)) {
                         cycle.push(x);
                     }
                     cycle.push(x);
                     cycles.add(new HashSet<>(cycle));
+                    if (!allCycles) {
+//                        length = distTo.get(w) + 1;
+//                        if (cycle.size() < 5) {
+//                            //System.out.println("#cycle-size: " + cycle.size());
+//                            return;
+//                        }
+                    }
                 }
             }
         }
@@ -118,16 +127,28 @@ public class Cycle {
         return cycle != null;
     }
 
-    public ArrayList<Vertex> cycle() {
-        ArrayList<Vertex> stackToList = new ArrayList<>();
-        if (cycle == null)
-            return stackToList;
-        stackToList.addAll(cycle);
-        Collections.reverse(stackToList);
-        return stackToList;
+    public HashSet<Vertex> cycle() {
+        if (cycle == null) return new HashSet<>();
+        return new HashSet<>(cycle);
     }
 
-    public HashSet<HashSet<Vertex>> getCycles() {
+    public ArrayList<HashSet<Vertex>> getCycles() {
+        ArrayList<HashSet<Vertex>> cycles = new ArrayList<>(this.cycles);
+        cycles.sort((c1, c2) -> c1.size() - c2.size());
         return cycles;
+    }
+    public ArrayList<HashSet<Vertex>> getIndependentCycles(ArrayList<HashSet<Vertex>> cycleList) {
+        ArrayList<HashSet<Vertex>> cycles;
+        if (cycleList == null){
+            cycles = new ArrayList<>(getCycles());
+        } else cycles = new ArrayList<>(cycleList);
+        ArrayList<HashSet<Vertex>> noIntersections = new ArrayList<>();
+        while (!cycles.isEmpty()) {
+            HashSet<Vertex> c = cycles.remove(0);
+            noIntersections.add(c);
+            cycles.removeIf(x -> x.stream().anyMatch(c::contains));
+        }
+        //System.out.println("#cycles with no intersection: " + noIntersections.size());
+        return noIntersections;
     }
 }

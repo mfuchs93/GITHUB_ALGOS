@@ -7,11 +7,16 @@ public class Clique {
     private int k;
     //mapping id to Vertex object
     private final Vertex[] vertices;
-    ArrayList<HashSet<Vertex>> cliques;
+    ArrayList<HashSet<Vertex>> cliques = new ArrayList<>();
     private final int MAX;
     // Stores the vertices
     private final int[] store;
     private int n;
+
+    public void setCliques(ArrayList<HashSet<Vertex>> cliques) {
+        this.cliques = cliques;
+    }
+
     // Graph
     private final int[][] graph;
     // Degree of the vertices
@@ -31,7 +36,27 @@ public class Clique {
                 d) {
             if (i > 0) this.n++;
         }
-        //findCliques(0, 1, k, false);
+        if (n > 0){
+            if (this.n < 10) this.k = this.n;
+            findCliques(0, 1, this.k, false);
+            cliques.sort((vertices, t1) -> t1.size() - vertices.size());
+        }
+    }
+
+    public ArrayList<HashSet<Vertex>> getIndependentCliques() {
+        ArrayList<HashSet<Vertex>> cliques = new ArrayList<>();
+        for (HashSet<Vertex> set :
+                this.getCliques()) {
+            cliques.add(new HashSet<>(set));
+        }
+        ArrayList<HashSet<Vertex>> noIntersections = new ArrayList<>();
+        while (!cliques.isEmpty()) {
+            HashSet<Vertex> c = cliques.remove(0);
+            noIntersections.add(c);
+            cliques.removeIf(x -> x.stream().anyMatch(c::contains));
+        }
+        System.out.println("#cliques with no intersection: " + noIntersections.size());
+        return noIntersections;
     }
 
     public void convertGraph() {
@@ -85,7 +110,7 @@ public class Clique {
         for (int j = i + 1; j <= n - (s - l); j++)
 
             // If the degree of the graph is sufficient
-            if (d[j] >= s - 1) {
+            if (d[j] >= l - 1) {
 
                 // Add the vertex to store
                 store[l] = j;
@@ -101,6 +126,8 @@ public class Clique {
                     if (l < s) {
                         // Recursion to add vertices
                         findCliques(j, l + 1, s, findOne);
+                        if (l > 2) print(l+1);
+
                         if (findOne && this.cliques.size() > 0) return;
                     }
                     // Size is met
@@ -128,19 +155,18 @@ public class Clique {
     }
 
     public HashSet<Vertex> cliqueRule() {
-        this.cliques = new ArrayList<>();
-        findCliques(0, 1, this.k, false);
         HashSet<Vertex> verticesToDelete = new HashSet<>();
         for (HashSet<Vertex> clique :
                 cliques) {
             for (Vertex v :
                     clique) {
-                if (this.g.getOutDegree(v) == this.k - 1 || this.g.getInDegree(v) == this.k - 1) {
+                if (this.g.getOutDegree(v) == clique.size() - 1 || this.g.getInDegree(v) == clique.size() - 1) {
                     verticesToDelete.addAll(clique.stream().filter(vertex -> vertex != v).collect(Collectors.toSet()));
                     break;
                 }
             }
         }
+        this.cliques.removeIf(x -> x.stream().anyMatch(verticesToDelete::contains));
         verticesToDelete.forEach(this::removeVertex);
         return verticesToDelete;
     }

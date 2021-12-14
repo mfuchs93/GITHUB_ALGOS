@@ -56,6 +56,8 @@ public class Main {
                 for (Vertex i : s) {
                     System.out.println(i.getName());
                 }
+                System.out.println("#No. of canceled branches: " + CyclePacking.cancelCounter);
+                System.out.println("#No. of canceled branches Local: " + CyclePacking.localCounter);
                 System.out.println("#recursive steps: " + recursiveSteps);
                 //System.out.println("time: " + (System.currentTimeMillis() - time));
             } catch (FileNotFoundException e) {

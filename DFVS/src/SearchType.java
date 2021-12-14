@@ -1,5 +1,5 @@
 public enum SearchType {
-    SHORTEST_CYCLE,
+    SHORT_CYCLE,
     DFS,
     CONTAINS_VERTEX,
 }

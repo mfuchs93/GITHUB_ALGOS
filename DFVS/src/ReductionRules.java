@@ -6,12 +6,15 @@ public class ReductionRules {
 
 
     public static void removeNoneCycleVertex(Graph g) {
+        int removed = 0;
         for (Vertex v : g.getVertices()) {
-            ArrayList<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX).cycle();
+            HashSet<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX, false).cycle();
             if (cycle.isEmpty()) {
                 g.removeVertex(v, false, false);
+                removed++;
             }
         }
+        //if (removed > 0) System.out.println("#nonecycle: " + removed);
     }
 
     public static void removeNoneCycleEdge(Graph g) {
@@ -22,7 +25,7 @@ public class ReductionRules {
         int removed = 0;
         HashSet<Vertex> s = new HashSet<>();
         for (Vertex v : g.getVertices()) {
-            if(v.isForbidden()) break; // return or break??
+            if (v.isForbidden()) break; // return or break??
             if (g.getInEdges().getOrDefault(v, empty).size() == 1 && !g.getInEdges().get(v).contains(v)) {
                 Vertex u = g.getInEdges().get(v).iterator().next();
                 for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
@@ -43,7 +46,7 @@ public class ReductionRules {
                 s.add(v);
             }
         }
-        return removed > 0? chainingClean(g): empty;
+        return removed > 0 ? chainingClean(g) : empty;
     }
 
     public static HashSet<Vertex> chainingClean(Graph g) {

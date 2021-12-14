@@ -58,6 +58,7 @@ public class Tarjan {
 
     private void buildSCC(HashSet<Vertex> vertices) {
         Graph subGraph = new Graph();
+        subGraph.setId_counter(g.getId_counter());
         for (Vertex v : g.getInEdges().keySet()) {
             if (vertices.contains(v)) {
                 subGraph.getInEdges().put(v, new HashSet<>());

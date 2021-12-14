@@ -6,6 +6,7 @@ public class Flower {
     private Graph maxFlowGraph;
     private int[][] maxFlowMatrix;
     private int vertexCount;
+    private HashSet<Vertex> empty = new HashSet<>();
 
     public Flower(Graph g) {
         this.g = g;
@@ -21,6 +22,26 @@ public class Flower {
         this.resetPetals();
     }
 
+    public void petalOneRule(Graph g) {
+        int removed = 0;
+        HashSet<Vertex> s = new HashSet<>();
+        for (Vertex v : g.getVertices()) {
+            if (v.isForbidden()) break;
+            if (v.getPetal() == 1 && !g.getInEdges().get(v).contains(v)) {
+                for (Vertex u :
+                        g.getInEdges().getOrDefault(v, empty)) {
+                    g.getOutEdges().getOrDefault(v, empty).forEach(x -> {
+                        g.getOutEdges().get(u).add(x);
+                        g.getInEdges().get(x).add(u);
+                    });
+                }
+                g.removeVertex(v, false, false);
+                removed++;
+            }
+        }
+        System.out.println("#removed by petalOne: "+ removed);
+    }
+
     public ArrayList<Vertex> petalRule(int k) {
         ArrayList<Vertex> verticesToRemove = new ArrayList<>();
         Vertex removeVertex = findRemoveVertex(k, verticesToRemove);
@@ -32,12 +53,13 @@ public class Flower {
         return verticesToRemove;
     }
 
-    private Vertex findRemoveVertex(int k,ArrayList<Vertex> verticesToRemove) {
+    private Vertex findRemoveVertex(int k, ArrayList<Vertex> verticesToRemove) {
         Vertex removeVertex = null;
         for (Vertex v :
                 this.g.getVertices()) {
             if (v.getPetal() > k) {
-                if(!verticesToRemove.contains(v) && (removeVertex == null || removeVertex.getPetal() > v.getPetal())) removeVertex = v;
+                if (!verticesToRemove.contains(v) && (removeVertex == null || removeVertex.getPetal() > v.getPetal()))
+                    removeVertex = v;
             }
         }
         return removeVertex;
@@ -48,7 +70,6 @@ public class Flower {
             v.setPetal(v.getMaxPetal());
         }
     }
-
 
 
     public void convertToFlowGraph() {
