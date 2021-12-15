@@ -9,7 +9,7 @@ public class Cycle {
     private final Graph g;
     private final HashSet<Vertex> empty = new HashSet<>();
     private HashMap<Vertex, Integer> distTo;
-    private final HashSet<HashSet<Vertex>> cycles = new HashSet<>();
+    private final HashSet<ArrayList<Vertex>> cycles = new HashSet<>();
 
     public Cycle(Graph g, SearchType type, boolean allCycles) {
         this.g = g;
@@ -48,7 +48,7 @@ public class Cycle {
         onStack.put(v, true);
         marked.put(v, true);
         for (Vertex w : g.getOutEdges().getOrDefault(v, empty)) {
-            if (false){//if (hasCycle()) {
+            if (hasCycle()) {
                 return;
             } else if (!marked.getOrDefault(w, false)) {
                 edgeTo.put(w, v);
@@ -60,7 +60,7 @@ public class Cycle {
                 }
                 cycle.push(w);
                 cycle.push(v);
-                cycles.add(new HashSet<>(cycle));
+                cycles.add(new ArrayList<>(cycle));
             }
         }
         onStack.put(v, false);
@@ -80,13 +80,12 @@ public class Cycle {
                         cycle.push(x);
                     }
                     cycle.push(x);
-                    cycles.add(new HashSet<>(cycle));
+                    cycles.add(new ArrayList<>(cycle));
                     if (!allCycles) {
-//                        length = distTo.get(w) + 1;
-//                        if (cycle.size() < 5) {
-//                            //System.out.println("#cycle-size: " + cycle.size());
-//                            return;
-//                        }
+                        length = distTo.get(w) + 1;
+                        if (cycle.size() < 4) {
+                            return;
+                        }
                     }
                 }
             }
@@ -127,28 +126,38 @@ public class Cycle {
         return cycle != null;
     }
 
-    public HashSet<Vertex> cycle() {
-        if (cycle == null) return new HashSet<>();
-        return new HashSet<>(cycle);
+    public ArrayList<Vertex> cycle() {
+        if (cycle == null) return new ArrayList<>();
+        return new ArrayList<>(cycle);
     }
 
-    public ArrayList<HashSet<Vertex>> getCycles() {
-        ArrayList<HashSet<Vertex>> cycles = new ArrayList<>(this.cycles);
+    public ArrayList<ArrayList<Vertex>> getCycles() {
+        ArrayList<ArrayList<Vertex>> cycles = new ArrayList<>(this.cycles);
         cycles.sort((c1, c2) -> c1.size() - c2.size());
         return cycles;
     }
-    public ArrayList<HashSet<Vertex>> getIndependentCycles(ArrayList<HashSet<Vertex>> cycleList) {
-        ArrayList<HashSet<Vertex>> cycles;
+    public ArrayList<ArrayList<Vertex>> getIndependentCycles(ArrayList<ArrayList<Vertex>> cycleList) {
+        ArrayList<ArrayList<Vertex>> cycles;
         if (cycleList == null){
             cycles = new ArrayList<>(getCycles());
         } else cycles = new ArrayList<>(cycleList);
-        ArrayList<HashSet<Vertex>> noIntersections = new ArrayList<>();
+        ArrayList<ArrayList<Vertex>> noIntersections = new ArrayList<>();
         while (!cycles.isEmpty()) {
-            HashSet<Vertex> c = cycles.remove(0);
+            ArrayList<Vertex> c = cycles.remove(0);
             noIntersections.add(c);
             cycles.removeIf(x -> x.stream().anyMatch(c::contains));
         }
         //System.out.println("#cycles with no intersection: " + noIntersections.size());
         return noIntersections;
+    }
+
+    public void getCycleCount() {
+        for (ArrayList<Vertex> s :
+                getCycles()) {
+            for (Vertex v :
+                    s) {
+                v.setCycleCount(v.getCycleCount() + 1);
+            }
+        }
     }
 }

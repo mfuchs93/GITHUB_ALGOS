@@ -46,7 +46,7 @@ if __name__ == '__main__':
             files += [line.strip()]
     
     #Set up the parallel task pool to use all available processors
-    count = 24
+    count = 4
     pool = mp.Pool(processes=count)
  
     #Run the jobs parallel

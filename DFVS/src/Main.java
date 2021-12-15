@@ -3,7 +3,29 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class Main {
-    private static int recursiveSteps = 0;
+    public static int recursiveSteps = 0;
+    public static int chaining1 = 0;
+    public static int chaining2 = 0;
+    public static int chaining3 = 0;
+    public static int preK = 0;
+    public static String path = "";
+    public static int indCliques = 0;
+    public static int indCycles = 0;
+    public static int petalOne = 0;
+    public static int flowers = 0;
+    public static int cliqueRule = 0;
+
+
+    public static void log(String path) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileWriter("log.txt", true));
+            pw.println(path + "\t" + chaining1 + "\t"+ chaining2 + "\t" + chaining3 + "\t" + recursiveSteps + "\t" + preK + "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule);
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static void countStep() {
         recursiveSteps++;
@@ -51,13 +73,13 @@ public class Main {
             try {
                 //long time = System.currentTimeMillis();
                 InputStream in = new FileInputStream(args[0]);
+                path = args[0];
                 Graph g = readGraphFromFile(in);
                 HashSet<Vertex> s = DFVS.solve(g);
                 for (Vertex i : s) {
                     System.out.println(i.getName());
                 }
-                System.out.println("#No. of canceled branches: " + CyclePacking.cancelCounter);
-                System.out.println("#No. of canceled branches Local: " + CyclePacking.localCounter);
+                log(args[0]);
                 System.out.println("#recursive steps: " + recursiveSteps);
                 //System.out.println("time: " + (System.currentTimeMillis() - time));
             } catch (FileNotFoundException e) {

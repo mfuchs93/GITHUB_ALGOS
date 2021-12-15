@@ -39,7 +39,7 @@ public class Flower {
                 removed++;
             }
         }
-        System.out.println("#removed by petalOne: "+ removed);
+        Main.petalOne = removed;
     }
 
     public ArrayList<Vertex> petalRule(int k) {

@@ -7,23 +7,20 @@ public class DFVS {
     public static HashSet<Vertex> branch(Graph g, int k, LinkedList<HashSet<Vertex>> independentCliques) {
         Main.countStep();
         if (Thread.interrupted()) {
-            System.out.println("#No. of canceled branches: " + CyclePacking.cancelCounter);
-            System.out.println("#No. of canceled branches Local: " + CyclePacking.localCounter);
+            Main.log(Main.path);
             System.out.println("Timeout");
             System.exit(1);
         }
         if (CyclePacking.greedyPacking(g,k)) return null;
-        if (CyclePacking.localSearchPacking(g,k)) return null;
         HashSet<Vertex> solution = new HashSet<>();
         HashSet<Vertex> chainingCleanSet = ReductionRules.chainingRule(g);
         solution.addAll(chainingCleanSet);
-        //System.out.println("#chaining: " + chainingCleanSet.size());
         k -= chainingCleanSet.size();
         HashSet<Vertex> s = new HashSet<>();
         if (k < 0) return null;
         //no cliques => branch on short cycle
         if (independentCliques == null) {
-            HashSet<Vertex> cycle = new Cycle(g, SearchType.SHORT_CYCLE, false).cycle();
+            ArrayList<Vertex> cycle = new Cycle(g, SearchType.SHORT_CYCLE, false).cycle();
             if (cycle.isEmpty()) return solution;
             cycle.removeIf(Vertex::isForbidden);
             if (cycle.isEmpty()) return null;
@@ -62,26 +59,30 @@ public class DFVS {
     public static HashSet<Vertex> solveSubGraph(Graph subGraph) {
         HashSet<Vertex> s = null;
         HashSet<Vertex> solution = new HashSet<>(ReductionRules.chainingRule(subGraph));
+        Main.chaining3 += ReductionRules.removed;
         if (subGraph.getVertices().isEmpty()) return solution;
         Flower flower = new Flower(subGraph);
         flower.petalOneRule(subGraph);
         ArrayList<Vertex> verticesToDelete = new ArrayList<>();
         Clique clique = new Clique(subGraph, 10);
         ArrayList<HashSet<Vertex>> independentCliques = clique.getIndependentCliques();
-        ArrayList<HashSet<Vertex>> independentCycles = new Cycle(subGraph, SearchType.SHORT_CYCLE, true).getIndependentCycles(null);
+        Main.indCliques += independentCliques.size();
+        CyclePacking.greedyPacking(subGraph, -1);
+        CyclePacking.localSearchPacking(subGraph, -1);
+        ArrayList<ArrayList<Vertex>> independentCycles = CyclePacking.packing;
         for (HashSet<Vertex> c : independentCliques) {
             independentCycles.removeIf(x -> x.stream().anyMatch(c::contains));
         }
+        Main.indCycles += independentCycles.size();
         int k = 0;
         int lowerK = 0;
 
         lowerK = independentCliques.stream().map(x -> x.size() - 1).reduce(0, Integer::sum);
         lowerK += independentCycles.size();
-        System.out.println("#lower-bound k through cliques and independent cycles: " + lowerK);
 
         k = lowerK;
+        Main.preK += lowerK;
         while (s == null) {
-            System.out.println("#k: " + k);
             if (k == 0 || k == lowerK || verticesToDelete.size() > 0) {
                 verticesToDelete = flower.petalRule(k);
             }
@@ -97,7 +98,7 @@ public class DFVS {
                 }
                 if (s != null) {
                     solution.addAll(verticesToDelete);
-                    System.out.println("#deleted through flowers: " + verticesToDelete.size());
+                    Main.flowers = verticesToDelete.size();
                 }
             }
             flower.resetPetals();
@@ -110,10 +111,12 @@ public class DFVS {
     public static HashSet<Vertex> solve(Graph g) {
         HashSet<Vertex> s;
         HashSet<Vertex> solution = new HashSet<>(ReductionRules.chainingRule(g));
+        Main.chaining1 = ReductionRules.removed;
         if (g.getVertices().isEmpty()) return solution;
         Clique clique = new Clique(g, 10);
         while (true) {
             HashSet<Vertex> verticesToDelete = clique.cliqueRule();
+            Main.cliqueRule = verticesToDelete.size();
             if (verticesToDelete.isEmpty()) {
                 break;
             }
@@ -125,6 +128,7 @@ public class DFVS {
             System.out.println("#removed by cliqueRule: " + verticesToDelete.size());
         }
         solution.addAll(ReductionRules.chainingRule(g));
+        Main.chaining2 = ReductionRules.removed;
         if (g.getVertices().isEmpty()) return solution;
         ArrayList<Graph> subGraphs = new Tarjan(g).SCC();
         if (subGraphs.isEmpty())

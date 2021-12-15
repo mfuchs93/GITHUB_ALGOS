@@ -8,6 +8,16 @@ public class Vertex {
     private boolean forbidden;
     private char polarity;
 
+    public int getCycleCount() {
+        return cycleCount;
+    }
+
+    public void setCycleCount(int cycleCount) {
+        this.cycleCount = cycleCount;
+    }
+
+    private int cycleCount;
+
     private int maxPetal;
     private int petal;
 

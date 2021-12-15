@@ -2,13 +2,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class ReductionRules {
+    public static int removed = 0;
     private static HashSet<Vertex> empty = new HashSet<>();
 
 
     public static void removeNoneCycleVertex(Graph g) {
-        int removed = 0;
+        removed = 0;
         for (Vertex v : g.getVertices()) {
-            HashSet<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX, false).cycle();
+            ArrayList<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX, false).cycle();
             if (cycle.isEmpty()) {
                 g.removeVertex(v, false, false);
                 removed++;
@@ -22,7 +23,7 @@ public class ReductionRules {
     }
 
     public static HashSet<Vertex> chainingRule(Graph g) {
-        int removed = 0;
+        removed = 0;
         HashSet<Vertex> s = new HashSet<>();
         for (Vertex v : g.getVertices()) {
             if (v.isForbidden()) break; // return or break??

@@ -55,7 +55,6 @@ public class Clique {
             noIntersections.add(c);
             cliques.removeIf(x -> x.stream().anyMatch(c::contains));
         }
-        System.out.println("#cliques with no intersection: " + noIntersections.size());
         return noIntersections;
     }
 
