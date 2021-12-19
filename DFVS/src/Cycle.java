@@ -83,7 +83,7 @@ public class Cycle {
                     cycles.add(new ArrayList<>(cycle));
                     if (!allCycles) {
                         length = distTo.get(w) + 1;
-                        if (cycle.size() < 4) {
+                        if (cycle.size() < 5) {
                             return;
                         }
                     }

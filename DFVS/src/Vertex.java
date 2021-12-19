@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Vertex {
@@ -7,6 +9,16 @@ public class Vertex {
     private int dfsLowLink;
     private boolean forbidden;
     private char polarity;
+
+    public HashSet<Vertex> getPetalNodes() {
+        return petalNodes;
+    }
+
+    public void setPetalNodes(HashSet<Vertex> petalNodes) {
+        this.petalNodes = petalNodes;
+    }
+
+    private HashSet<Vertex> petalNodes = new HashSet<>();
 
     public int getCycleCount() {
         return cycleCount;

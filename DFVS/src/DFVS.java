@@ -4,15 +4,15 @@ import java.util.stream.Collectors;
 
 public class DFVS {
 
-    public static HashSet<Vertex> branch(Graph g, int k, LinkedList<HashSet<Vertex>> independentCliques) {
+    public static HashSet<Vertex> branch(Graph g, int k, LinkedList<HashSet<Vertex>> independentCliques, int level) {
         Main.countStep();
         if (Thread.interrupted()) {
             Main.log(Main.path);
-            System.out.println("Timeout");
-            System.exit(1);
+            System.out.println("#Timeout");
+            //System.exit(1);
         }
-        if (CyclePacking.greedyPacking(g,k)) return null;
         HashSet<Vertex> solution = new HashSet<>();
+        if (CyclePacking.greedyPacking(g,k)) return null;
         HashSet<Vertex> chainingCleanSet = ReductionRules.chainingRule(g);
         solution.addAll(chainingCleanSet);
         k -= chainingCleanSet.size();
@@ -26,7 +26,7 @@ public class DFVS {
             if (cycle.isEmpty()) return null;
             for (Vertex vertex : cycle) {
                 if (!vertex.isForbidden()) { //only delete if not forbidden
-                    s = branch(g.removeVertex(vertex, true, true), k - 1, null);
+                    s = branch(g.removeVertex(vertex, true, true), k - 1, null, level+1);
                     if (s != null) {
                         s.add(vertex);
                         break;
@@ -35,14 +35,14 @@ public class DFVS {
             }
             cycle.forEach(v -> v.setForbidden(false));
         } else if (independentCliques.isEmpty()) {
-            s = branch(g, k, null);
+            s = branch(g, k, null, level+ 1);
         } else {
             HashSet<Vertex> clique = independentCliques.poll();
             ArrayList<HashSet<Vertex>> subSets = getSubsets(new ArrayList<>(clique), clique.size() - 1);
             for (HashSet<Vertex> set : subSets) {
                 Graph h = new Graph(g);
                 set.forEach(x -> h.removeVertex(x, false, false));
-                s = branch(h, k - set.size(), new LinkedList<>(independentCliques));
+                s = branch(h, k - set.size(), new LinkedList<>(independentCliques), level+1);
                 if (s != null) {
                     s.addAll(set);
                     break;
@@ -62,13 +62,13 @@ public class DFVS {
         Main.chaining3 += ReductionRules.removed;
         if (subGraph.getVertices().isEmpty()) return solution;
         Flower flower = new Flower(subGraph);
-        flower.petalOneRule(subGraph);
+        //flower.petalOneRule(subGraph);
         ArrayList<Vertex> verticesToDelete = new ArrayList<>();
         Clique clique = new Clique(subGraph, 10);
         ArrayList<HashSet<Vertex>> independentCliques = clique.getIndependentCliques();
         Main.indCliques += independentCliques.size();
         CyclePacking.greedyPacking(subGraph, -1);
-        CyclePacking.localSearchPacking(subGraph, -1);
+        //CyclePacking.localSearchPacking(subGraph, -1);
         ArrayList<ArrayList<Vertex>> independentCycles = CyclePacking.packing;
         for (HashSet<Vertex> c : independentCliques) {
             independentCycles.removeIf(x -> x.stream().anyMatch(c::contains));
@@ -89,12 +89,24 @@ public class DFVS {
             if (verticesToDelete.size() <= k) {
                 Graph h = new Graph(subGraph);
                 verticesToDelete.forEach(x -> h.removeVertex(x, false, false));
+                HashSet<Vertex> set = (HashSet<Vertex>) h.getVertices().stream().filter(x-> x.getPetal() > flower.getAverageFlow()).collect(Collectors.toSet());
+                for (Vertex v :
+                        set) {
+                    Graph i = new Graph(h);
+                    v.getPetalNodes().forEach(x-> i.removeVertex(x,false,false));
+                    if(CyclePacking.greedyPacking(i, k - v.getPetal() - verticesToDelete.size())){
+                        h.removeVertex(v,false,false);
+                        h.getVertices().forEach(x -> x.setPetal(x.getPetal() - 1));
+                        verticesToDelete.add(v);
+                        //Main.packingFlowers.add(v);
+                    }
+                }
                 if (independentCliques.isEmpty()) {
-                    s = branch(h, k - verticesToDelete.size(), null);
+                    s = branch(h, k - verticesToDelete.size(), null, 1);
                 } else {
                     ArrayList<Vertex> finalVerticesToDelete = verticesToDelete;
                     independentCliques.forEach(x -> finalVerticesToDelete.forEach(x::remove));
-                    s = branch(h, k - verticesToDelete.size(), new LinkedList<>(independentCliques));
+                    s = branch(h, k - verticesToDelete.size(), new LinkedList<>(independentCliques), 1);
                 }
                 if (s != null) {
                     solution.addAll(verticesToDelete);

@@ -4,9 +4,11 @@ import java.util.HashSet;
 public class CyclePacking {
     public static int cancelCounter = 0;
     public static int localCounter = 0;
+    public static int localSearchFoundMore = 0;
     public static ArrayList<ArrayList<Vertex>> packing = new ArrayList<>();
 
     public static boolean greedyPacking(Graph g, int k) {
+        //long start = System.currentTimeMillis();
         packing = new ArrayList<>();
         Graph h = new Graph(g);
         int counter = 0;
@@ -14,6 +16,7 @@ public class CyclePacking {
             Cycle cycle = new Cycle(h, SearchType.SHORT_CYCLE, false);
             ArrayList<Vertex> c = cycle.cycle();
             if (c.isEmpty()) {
+                //System.out.println("#time:" + (System.currentTimeMillis() - start));
                 return false;
             }
             packing.add(c);
@@ -21,6 +24,7 @@ public class CyclePacking {
             counter++;
         }
         cancelCounter++;
+        //System.out.println("#time:" + (System.currentTimeMillis() - start));
         return true;
     }
 
@@ -36,6 +40,7 @@ public class CyclePacking {
             while (!cycles.isEmpty()) {
                 ArrayList<ArrayList<Vertex>> indCycles = cycle1.getIndependentCycles(cycles);
                 if (indCycles.size() > 1) {
+                    localSearchFoundMore++;
                     p.addAll(indCycles);
                     break;
                 } else {

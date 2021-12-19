@@ -1,3 +1,54 @@
 ../instances/complex/biology-n_23-m_166-p_0.5-17	0	0	0	1899	7	788	0	7	0	0	0
 ../instances/complex/biology-n_23-m_166-p_0.5-17	0	0	0	1922	7	795	0	7	0	0	0
 ../instances/complex/biology-n_81-m_1292-p_0.5-3	9	1	0	20145	23	4431	0	23	0	0	0
+../instances/complex/biology-n_81-m_1292-p_0.5-3	9	1	0	1	2	0	0	2	0	0	0
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	721	47	94	0	47	0	0	0
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	6431	47	699	0	47	0	0	0
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	2191	47	1091	0	47	0	0	0
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	2369	47	1251	0	47	0	0	0
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	599	49	319	0	49	0	5	0
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	599	49	319	0	49	0	5	0
+../instances/flowtest.txt	0	0	0	4	3	0	0	3	0	0	0
+../instances/complex3/ChicagoRegional-n_10000	2449	1059	444	266713	817	103995	0	817	0	0	0
+../instances/flowtest.txt	0	0	0	4	3	0	0	3	0	0	0
+../instances/flowtest.txt	0	0	0	4	3	0	0	3	0	0	0
+../instances/flowtest.txt	0	0	0	4	3	0	0	3	0	0	0
+../instances/flowtest.txt	0	0	0	5	3	3	0	3	0	4	0
+../instances/flowtest.txt	0	0	0	5	3	3	0	3	0	4	0
+../instances/flowtest.txt	0	0	0	3	3	1	0	3	0	1	0
+../instances/complex3/ChicagoRegional-n_3000	878	21	4	39	9	0	0	9	0	0	0
+../instances/complex3/ChicagoRegional-n_3000	878	21	4	39	9	0	0	9	0	0	0
+../instances/complex3/ChicagoRegional-n_3000	878	21	4	39	9	0	0	9	0	0	0
+../instances/complex3/ChicagoRegional-n_3000	878	21	4	39	9	0	0	9	0	0	0
+../instances/complex3/ChicagoRegional-n_3000	878	21	4	39	9	0	0	9	0	0	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	846	139	0	0	139	0	1	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	846	139	0	0	139	0	1	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	813	139	39	0	139	0	1	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	846	139	0	0	139	0	1	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	846	139	0	0	139	0	1	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	813	139	39	0	139	0	1	0
+../instances/complex3/ChicagoRegional-n_10000	2449	1059	444	153522	820	59245	0	820	0	0	0
+../instances/complex3/ChicagoRegional-n_10000	2449	1059	444	264022	820	103456	0	820	0	0	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	678	139	70	0	139	0	1	0
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	678	139	70	0	139	0	1	0	3479
+../instances/complex3/out.cfinder-google-n_4000	1295	380	31	846	139	0	0	139	0	1	0	3691
+../instances/complex3/ChicagoRegional-n_7000	2337	597	172	1889	178	464	0	178	0	0	0	7935
+../instances/complex3/ChicagoRegional-n_7000	2337	597	172	708	178	164	0	178	0	0	0	7553
+../instances/complex3/ChicagoRegional-n_7000	2337	597	172	329	178	100	0	178	0	0	0	7429
+../instances/synthetic3/synth-n_700-m_13374-k_30-p_0.05.txt	22	0	4	8	30	19	0	30	0	26	0	72717
+../instances/synthetic3/synth-n_700-m_13374-k_30-p_0.05.txt	22	0	4	20	30	24	0	30	0	26	0	76330
+../instances/synthetic3/synth-n_700-m_13374-k_30-p_0.05.txt	22	0	4	115	30	90	0	30	0	26	0	94087
+../instances/synthetic3/synth-n_700-m_13374-k_30-p_0.05.txt	22	0	4	8	30	19	0	30	0	26	0	88975
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	2	49	67	0	49	0	0	0	186550
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	2	49	67	0	49	0	0	0	182124
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	82	49	36	0	49	0	5	0	55889
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	53	49	96	0	49	0	38	0	131836
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	53	49	96	0	49	0	38	0	135166
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	23	49	84	0	49	0	41	0	59905
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	44	49	93	0	49	0	38	0	36448
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	80	49	36	0	49	0	6	0	54849
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	32	49	78	0	49	0	36	0	33518
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	33	49	76	0	49	0	35	0	32061
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	33	49	76	0	49	0	35	0	37175
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	248	49	173	0	49	0	24	0	84853
+../instances/synthetic3/synth-n_500-m_14453-k_50-p_0.1.txt	2	0	0	33	49	75	0	49	0	35	0	38002

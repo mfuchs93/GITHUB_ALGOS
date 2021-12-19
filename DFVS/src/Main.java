@@ -14,12 +14,15 @@ public class Main {
     public static int petalOne = 0;
     public static int flowers = 0;
     public static int cliqueRule = 0;
+    //public static HashSet<Vertex> packingFlowers = new HashSet<>();
+    public static long time = 0;
 
 
     public static void log(String path) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("log.txt", true));
-            pw.println(path + "\t" + chaining1 + "\t"+ chaining2 + "\t" + chaining3 + "\t" + recursiveSteps + "\t" + preK + "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule);
+            pw.println(path + "\t" + chaining1 + "\t"+ chaining2 + "\t" + chaining3 + "\t" + recursiveSteps + "\t" + preK +
+                    "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule+"\t" + (System.currentTimeMillis() - time));
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +74,7 @@ public class Main {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<?> future = executor.submit(() -> {
             try {
-                //long time = System.currentTimeMillis();
+                time = System.currentTimeMillis();
                 InputStream in = new FileInputStream(args[0]);
                 path = args[0];
                 Graph g = readGraphFromFile(in);
@@ -81,6 +84,7 @@ public class Main {
                 }
                 log(args[0]);
                 System.out.println("#recursive steps: " + recursiveSteps);
+                //System.out.println("#" + packingFlowers);
                 //System.out.println("time: " + (System.currentTimeMillis() - time));
             } catch (FileNotFoundException e) {
                 System.out.println("File not found '" + args[0] + "'");
@@ -89,7 +93,7 @@ public class Main {
             }
         });
         try {
-            future.get(180, TimeUnit.SECONDS);
+            future.get(175, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             future.cancel(true);
         } catch (ExecutionException | InterruptedException e) {

@@ -1,12 +1,16 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.floor;
+import static java.lang.Math.round;
+
 public class Flower {
     private Graph g;
     private Graph maxFlowGraph;
     private int[][] maxFlowMatrix;
     private int vertexCount;
     private HashSet<Vertex> empty = new HashSet<>();
+    private int averageFlow = 0;
 
     public Flower(Graph g) {
         this.g = g;
@@ -18,7 +22,9 @@ public class Flower {
             int finalI = i;
             Vertex v = vertices.stream().filter(x -> x.getId() == finalI).findFirst().get();
             v.getParent().setMaxPetal(flow);
+            averageFlow+=flow;
         }
+        averageFlow /= round((double) g.getVertices().size() * 3/5);
         this.resetPetals();
     }
 
@@ -127,6 +133,14 @@ public class Flower {
                     // and can return true
                     if (v == t) {
                         parent[v] = u;
+                        for (int i=t; i != s; i = parent[i]){
+                            HashSet<Vertex> vertices = (HashSet<Vertex>) this.maxFlowGraph.getVertices();
+                            int finalI = i;
+                            Vertex w = vertices.stream().filter(x -> x.getId() == finalI).findFirst().get().getParent();
+                            Vertex flower = vertices.stream().filter(x -> x.getId() == s).findFirst().get().getParent();
+                            flower.getPetalNodes().add(w);
+
+                        }
                         return true;
                     }
                     queue.add(v);
@@ -217,5 +231,9 @@ public class Flower {
 
     public void setMaxFlowMatrix(int[][] maxFlowMatrix) {
         this.maxFlowMatrix = maxFlowMatrix;
+    }
+
+    public int getAverageFlow() {
+        return averageFlow;
     }
 }

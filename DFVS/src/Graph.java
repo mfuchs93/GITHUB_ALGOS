@@ -96,11 +96,12 @@ public class Graph implements Comparable<Graph> {
 
     @Override
     public int compareTo(Graph graph) {
-        if (this.getVertices().size() <= graph.getVertices().size()) {
-            return -1;
-        } else {
-            return 1;
-        }
+        return this.getVertices().size() - graph.getVertices().size();
+//        if (this.getVertices().size() <= graph.getVertices().size()) {
+//            return -1;
+//        } else {
+//            return 1;
+//        }
     }
 
     public void splitVertex(Vertex v) {
