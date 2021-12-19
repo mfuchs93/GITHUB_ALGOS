@@ -7,6 +7,7 @@ import sys
 import os
 import argparse
 import glob
+import random
 import subprocess as sp
 import multiprocessing as mp
 
@@ -18,7 +19,7 @@ args = parser.parse_args()
 
 # graph files can be data-list.txt
 
-opt_sol_syn = open("../instances/optimal_solution_sizes.txt")
+opt_sol_syn = open("../instances/opt-sol3.txt")
 opt_sizes = dict()
 for line in opt_sol_syn:
     sp_line = line.split()
@@ -30,7 +31,10 @@ def work(in_file):
     split_line = in_file.split("/")
     split_line = split_line[-1]
     if split_line in opt_sizes:
-    	opt_size = str(opt_sizes[split_line])
+        if not (split_line.startswith('t'):
+    	    opt_size = str(opt_sizes[split_line])
+    	else:
+    	    opt_size = "-1"
     else:
     	opt_size = "-1"
     #opt_size = "-1"
@@ -47,9 +51,11 @@ if __name__ == '__main__':
     
     #Set up the parallel task pool to use all available processors
     count = 4
+    random.shuffle(files)
     pool = mp.Pool(processes=count)
  
     #Run the jobs parallel
+
 	
     pool.map(work, files)
 

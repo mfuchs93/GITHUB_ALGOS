@@ -1,0 +1,38 @@
+//        HashSet<Graph> subGraphs = new Tarjan(g).SCC();
+//        if (subGraphs.isEmpty())
+//            return solution; //return solution, because we may have deleted one in chaining
+//        if (subGraphs.size() > k) return null;
+//        int counter = 1; // how many we have deleted for this subGraph
+//        int restK = k; // how many we can delete in the remaining subGraphs
+//        Collections.sort(subGraphs);
+//        for (Graph subGraph :
+//                subGraphs) {
+//            ArrayList<Vertex> cycle = new Cycle(subGraph, SearchType.SHORTEST_CYCLE).cycle();
+//            cycle.removeIf(Vertex::isForbidden);
+//            if (cycle.isEmpty()) return null; // if all forbidden return
+//            while (restK - counter >= 0) {
+//                for (Vertex vertex : cycle) {
+//                    if (!vertex.isForbidden()) { //only delete if not forbidden
+//                        s = branch(subGraph.removeVertex(vertex, true, true), counter - 1, verticesToDelete);
+//                        if (s != null) {
+//                            s.add(vertex);
+//                            break;
+//                        }
+//                    }
+//                }
+//                cycle.forEach(v -> v.setForbidden(false));
+//                if (s != null) {
+//                    restK -= counter;
+//                    counter = 1;
+//                    break;
+//                } else {
+//                    counter++;
+//                }
+//            }
+//            if (s == null) {
+//                return null;
+//            } else {
+//                solution.addAll(s);
+//                s = null;
+//            }
+//        }
