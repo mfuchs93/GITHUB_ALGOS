@@ -104,9 +104,11 @@ public class DFVS {
                 if (independentCliques.isEmpty()) {
                     s = branch(h, k - verticesToDelete.size(), null, 1);
                 } else {
+                    ArrayList<HashSet<Vertex>> iC = new ArrayList<>(independentCliques);
                     ArrayList<Vertex> finalVerticesToDelete = verticesToDelete;
-                    independentCliques.forEach(x -> finalVerticesToDelete.forEach(x::remove));
-                    s = branch(h, k - verticesToDelete.size(), new LinkedList<>(independentCliques), 1);
+                    iC.forEach(x -> finalVerticesToDelete.forEach(x::remove));
+                    iC.removeIf(x -> x.size() < 2);
+                    s = branch(h, k - verticesToDelete.size(), new LinkedList<>(iC), 1);
                 }
                 if (s != null) {
                     solution.addAll(verticesToDelete);
