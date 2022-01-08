@@ -183,6 +183,11 @@ public class Flower {
         // Augment the flow while there is path from source
         // to sink
         while (bfs(rGraph, s, t, parent)) {
+            if (Thread.interrupted()) {
+                Main.log(Main.path);
+                System.out.println("#Timeout");
+                //System.exit(1);
+            }
             // Find minimum residual capacity of the edhes
             // along the path filled by BFS. Or we can say
             // find the maximum flow through the path found.

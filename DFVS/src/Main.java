@@ -16,13 +16,14 @@ public class Main {
     public static int cliqueRule = 0;
     //public static HashSet<Vertex> packingFlowers = new HashSet<>();
     public static long time = 0;
+    public static int lbFlower = 0;
 
 
     public static void log(String path) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("log.txt", true));
             pw.println(path + "\t" + chaining1 + "\t"+ chaining2 + "\t" + chaining3 + "\t" + recursiveSteps + "\t" + preK +
-                    "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule+"\t" + (System.currentTimeMillis() - time));
+                    "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule+"\t" + (System.currentTimeMillis() - time) + "\t" + lbFlower);
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
