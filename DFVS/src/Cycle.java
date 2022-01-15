@@ -79,7 +79,7 @@ public class Cycle {
                     for (x = w; distTo.get(x) != 0; x = edgeTo.get(x)) {
                         cycle.push(x);
                     }
-                    cycle.push(x);
+                    //cycle.push(x);
                     cycles.add(new ArrayList<>(cycle));
                     if (!allCycles) {
                         length = distTo.get(w) + 1;

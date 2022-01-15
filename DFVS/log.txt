@@ -66,3 +66,7 @@
 ../instances/synthetic3/synth-n_4000-m_1721128-k_200-p_0.2.txt	0	0	0	0	0	0	0	0	0	0	0	175065
 ../instances/synthetic3/synth-n_4000-m_1721128-k_200-p_0.2.txt	0	0	0	0	0	0	0	0	0	0	0	175154	0
 ../instances/complex3/blogs-n_1000	264	71	26	1616	156	1107	13	55	0	0	8	175036	0
+../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	180	0
+../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	644	0
+../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	316	0
+../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	120387	0
