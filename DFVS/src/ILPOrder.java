@@ -44,7 +44,7 @@ public class ILPOrder {
                     model.addConstr(orderexpr,GRB.GREATER_EQUAL, 1.0, "edge" + i++);
                 }
             }
-            ArrayList<ArrayList<Vertex>> cycles = new Cycle(g, SearchType.SHORT_CYCLE, true).getCycles();
+            ArrayList<ArrayList<Vertex>> cycles = new Cycle(g, SearchType.SHORT_CYCLE, true, true).getCycles();
             int j=0;
             for (ArrayList<Vertex> cycle :
                     cycles) {

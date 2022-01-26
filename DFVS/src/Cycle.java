@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Cycle {
     private final boolean allCycles;
+    private final boolean timeLimit;
     private HashMap<Vertex, Boolean> marked;
     private HashMap<Vertex, Vertex> edgeTo;
     private HashMap<Vertex, Boolean> onStack;
@@ -11,9 +12,10 @@ public class Cycle {
     private HashMap<Vertex, Integer> distTo;
     private final HashSet<ArrayList<Vertex>> cycles = new HashSet<>();
 
-    public Cycle(Graph g, SearchType type, boolean allCycles) {
+    public Cycle(Graph g, SearchType type, boolean allCycles, boolean timeLimit) {
         this.g = g;
         this.allCycles = allCycles;
+        this.timeLimit = timeLimit;
         switch (type) {
             case DFS -> {
                 onStack = new HashMap<>();
@@ -25,13 +27,14 @@ public class Cycle {
                     }
                 }
             }
-            case SHORT_CYCLE -> shortCycle(this.allCycles);
+            case SHORT_CYCLE -> shortCycle(this.allCycles, this.timeLimit);
         }
     }
 
-    public Cycle(Graph g, Vertex v, SearchType type, boolean allCycles) {
+    public Cycle(Graph g, Vertex v, SearchType type, boolean allCycles, boolean timeLimit) {
         this.g = g;
         this.allCycles = allCycles;
+        this.timeLimit = timeLimit;
 
         switch (type) {
             case DFS -> {
@@ -66,7 +69,8 @@ public class Cycle {
         onStack.put(v, false);
     }
 
-    public void shortCycle(boolean allCycles) {
+    public void shortCycle(boolean allCycles, boolean timeLimit) {
+        long endTime = System.currentTimeMillis() + 5_000;
         Graph r = g.reverse();
         int length = g.getVertices().size() + 1;
         for (Vertex v : g.getVertices()) {
@@ -88,6 +92,9 @@ public class Cycle {
                         }
                     }
                 }
+            }
+            if (timeLimit){
+                if (System.currentTimeMillis() > endTime) return;
             }
         }
     }

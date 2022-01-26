@@ -1,9 +1,6 @@
 import gurobi.*;
 
-import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class MyCallback extends GRBCallback {
     private double lastiter;
@@ -36,20 +33,40 @@ public class MyCallback extends GRBCallback {
                     solNames.add(xvar.get(GRB.StringAttr.VarName));
                 }
                 g.getVertices().stream().filter(vertex -> solNames.contains(vertex.getName())).forEach(v -> h.removeVertex(v, false, false));
-                ArrayList<Vertex> cycle = new Cycle(h, SearchType.SHORT_CYCLE, false).cycle();
-                if (!cycle.isEmpty()) {
-                    GRBLinExpr expr = new GRBLinExpr();
-                    for (Vertex v :
-                            cycle) {
-                        String vName = v.getName();
-                        GRBVar var = null;
-                        for (GRBVar xvar :
-                                vars) {
-                            if (xvar.get(GRB.StringAttr.VarName).equals(vName)) var = xvar;
+//                ArrayList<Vertex> cycle = new Cycle(h, SearchType.SHORT_CYCLE, false, false).cycle();
+//                if (!cycle.isEmpty()) {
+//                    GRBLinExpr expr = new GRBLinExpr();
+//                    for (Vertex v :
+//                            cycle) {
+//                        String vName = v.getName();
+//                        GRBVar var = null;
+//                        for (GRBVar xvar :
+//                                vars) {
+//                            if (xvar.get(GRB.StringAttr.VarName).equals(vName)) var = xvar;
+//                        }
+//                        expr.addTerm(1.0, var);
+//                    }
+//                    addLazy(expr, GRB.GREATER_EQUAL, 1.0);
+//                }
+                CyclePacking.greedyPacking(h,-1);
+                ArrayList<ArrayList<Vertex>> cycles = CyclePacking.packing;
+                if (!cycles.isEmpty()) {
+                    int i = 0;
+                    for (ArrayList<Vertex> cycle :
+                            cycles) {
+                        GRBLinExpr expr = new GRBLinExpr();
+                        for (Vertex v :
+                                cycle) {
+                            String vName = v.getName();
+                            GRBVar var = null;
+                            for (GRBVar xvar :
+                                    vars) {
+                                if (xvar.get(GRB.StringAttr.VarName).equals(vName)) var = xvar;
+                            }
+                            expr.addTerm(1.0, var);
                         }
-                        expr.addTerm(1.0, var);
+                        addLazy(expr, GRB.GREATER_EQUAL, 1.0);
                     }
-                    addLazy(expr, GRB.GREATER_EQUAL, 1.0);
                 }
             }
         } catch (GRBException e) {

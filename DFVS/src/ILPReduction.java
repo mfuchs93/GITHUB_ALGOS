@@ -22,6 +22,7 @@ public class ILPReduction {
             // Create empty environment, set options, and start
             GRBEnv env = new GRBEnv(true);
             env.set(GRB.IntParam.OutputFlag, 0);
+            //env.set(GRB.IntParam.Threads, 1);
             env.start();
             // Create empty model
             GRBModel model = new GRBModel(env);
@@ -49,7 +50,7 @@ public class ILPReduction {
                     model.addConstr(orderexpr,GRB.GREATER_EQUAL, 1.0, "edge" + i++);
                 }
             }
-            ArrayList<ArrayList<Vertex>> cycles = new Cycle(g, SearchType.SHORT_CYCLE, true).getCycles();
+            ArrayList<ArrayList<Vertex>> cycles = new Cycle(g, SearchType.SHORT_CYCLE, true, true).getCycles();
             int j=0;
             for (ArrayList<Vertex> cycle :
                     cycles) {

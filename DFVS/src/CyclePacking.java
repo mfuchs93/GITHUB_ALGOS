@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class CyclePacking {
     public static int cancelCounter = 0;
@@ -13,7 +12,7 @@ public class CyclePacking {
         Graph h = new Graph(g);
         int counter = 0;
         while (counter <= k || k == -1) {
-            Cycle cycle = new Cycle(h, SearchType.SHORT_CYCLE, false);
+            Cycle cycle = new Cycle(h, SearchType.SHORT_CYCLE, false, false);
             ArrayList<Vertex> c = cycle.cycle();
             if (c.isEmpty()) {
                 //System.out.println("#time:" + (System.currentTimeMillis() - start));
@@ -35,7 +34,7 @@ public class CyclePacking {
             Graph h = new Graph(g);
             p.remove(cycle);
             p.forEach(x -> x.forEach(v -> h.removeVertex(v, false, false)));
-            Cycle cycle1 = new Cycle(h, SearchType.SHORT_CYCLE, true);
+            Cycle cycle1 = new Cycle(h, SearchType.SHORT_CYCLE, true, false);
             ArrayList<ArrayList<Vertex>> cycles = cycle1.getCycles();
             while (!cycles.isEmpty()) {
                 ArrayList<ArrayList<Vertex>> indCycles = cycle1.getIndependentCycles(cycles);

@@ -9,7 +9,7 @@ public class ReductionRules {
     public static void removeNoneCycleVertex(Graph g) {
         removed = 0;
         for (Vertex v : g.getVertices()) {
-            ArrayList<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX, false).cycle();
+            ArrayList<Vertex> cycle = new Cycle(g, v, SearchType.CONTAINS_VERTEX, false, false).cycle();
             if (cycle.isEmpty()) {
                 g.removeVertex(v, false, false);
                 removed++;
