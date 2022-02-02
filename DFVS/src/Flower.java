@@ -1,28 +1,32 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.floor;
 import static java.lang.Math.round;
 
 public class Flower {
     private Graph g;
+    private ArrayList<Vertex> cycle;
     private Graph maxFlowGraph;
     private int[][] maxFlowMatrix;
     private int vertexCount;
     private HashSet<Vertex> empty = new HashSet<>();
     private int averageFlow = 0;
 
-    public Flower(Graph g) {
+    public Flower(Graph g, ArrayList<Vertex> cycle) {
         this.g = g;
+        this.cycle = cycle;
         this.maxFlowGraph = new Graph(g);
         convertToFlowGraph();
         HashSet<Vertex> vertices = (HashSet<Vertex>) this.maxFlowGraph.getVertices();
         for (int i = 0; i < vertexCount - 1; i += 2) {
-            int flow = fordFulkerson(this.maxFlowMatrix, i, i + 1);
-            int finalI = i;
-            Vertex v = vertices.stream().filter(x -> x.getId() == finalI).findFirst().get();
-            v.getParent().setMaxPetal(flow);
-            averageFlow+=flow;
+            int finalI1 = i;
+            if (cycle == null || cycle.stream().map(Vertex::getId).collect(Collectors.toList()).contains(i) && !(g.getVertices().stream().filter(v -> v.getId() == finalI1).collect(Collectors.toList()).get(0).getMaxPetal() == 0)) {
+                int flow = fordFulkerson(this.maxFlowMatrix, i, i + 1);
+                int finalI = i;
+                Vertex v = vertices.stream().filter(x -> x.getId() == finalI).findFirst().get();
+                v.getParent().setMaxPetal(flow);
+                averageFlow+=flow;
+            }
         }
         averageFlow /= round((double) g.getVertices().size() * 3/5);
         this.resetPetals();
@@ -184,7 +188,7 @@ public class Flower {
         // to sink
         while (bfs(rGraph, s, t, parent)) {
             if (Thread.interrupted()) {
-                Main.log(Main.path);
+                Main.log(Main.path, 0);
                 System.out.println("#Timeout");
                 //System.exit(1);
             }

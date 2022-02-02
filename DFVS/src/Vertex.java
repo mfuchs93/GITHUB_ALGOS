@@ -10,6 +10,16 @@ public class Vertex {
     private boolean forbidden;
     private char polarity;
 
+    public int getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(int orderIndex) {
+        this.orderIndex = orderIndex;
+    }
+
+    private int orderIndex;
+
     public HashSet<Vertex> getPetalNodes() {
         return petalNodes;
     }

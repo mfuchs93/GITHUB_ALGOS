@@ -18,12 +18,15 @@ public class Main {
     public static long time = 0;
     public static int lbFlower = 0;
 
+    public static boolean USEDFVS = true;
+    public static boolean HEURISTIC = false;
 
-    public static void log(String path) {
+
+    public static void log(String path, int size) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("log.txt", true));
             pw.println(path + "\t" + chaining1 + "\t"+ chaining2 + "\t" + chaining3 + "\t" + recursiveSteps + "\t" + preK +
-                    "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule+"\t" + (System.currentTimeMillis() - time) + "\t" + lbFlower);
+                    "\t" + CyclePacking.cancelCounter + "\t"+ indCliques + "\t" + indCycles + "\t" + petalOne + "\t" + flowers+ "\t" + cliqueRule+"\t" + (System.currentTimeMillis() - time) + "\t" + lbFlower + "\t" + size);
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,11 +82,24 @@ public class Main {
                 InputStream in = new FileInputStream(args[0]);
                 path = args[0];
                 Graph g = readGraphFromFile(in);
-                HashSet<Vertex> s = DFVS.solve(g);
+                HashSet<Vertex> s = null;
+                if(USEDFVS) {
+                    if (HEURISTIC){
+                        s = DFVSHeuristic.solve(g);
+                    } else {
+                        s = DFVS.solve(g);
+                    }
+                } else {
+                    Graph h = new Graph(g);
+                    for (Vertex v : h.getVertices()) {
+                        h.splitVertex(v);
+                    }
+                    s = DFASHeuristic.solve(h);
+                }
                 for (Vertex i : s) {
                     System.out.println(i.getName());
                 }
-                log(args[0]);
+                log(args[0], s.size());
                 System.out.println("#recursive steps: " + recursiveSteps);
                 //System.out.println("#" + packingFlowers);
                 //System.out.println("time: " + (System.currentTimeMillis() - time));

@@ -70,3 +70,92 @@
 ../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	644	0
 ../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	316	0
 ../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	120387	0
+../instances/complex/openflights-n_200	90	4	0	0	24	0	0	0	0	0	0	83116	0
+../instances/complex/openflights-n_200	29	4	0	0	24	0	0	0	0	0	0	110	0
+../instances/complex/openflights-n_200	0	0	0	0	0	0	0	0	0	0	0	124	0
+../instances/complex/openflights-n_200	0	0	0	0	0	0	0	0	0	0	0	90	0
+../instances/complex/openflights-n_200	0	0	0	0	0	0	0	0	0	0	0	61	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	1597	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	1502	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	1420	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	175010	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	175021	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	298565	0
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	1902	0	475
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	2071	0	475
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	1605	0	478
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3797	0	1960
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3353	0	1960
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3615	0	1960
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3133	0	1344
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3297	0	1300
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3385	0	1438
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3519	0	1456
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	3812	0	1452
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	33139	0	1461
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	13788	0	1394
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	14448	0	1409
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	14355	0	1401
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	13360	0	1373
+../instances/complex3/wikispeedia-n_2000	0	0	0	0	0	0	0	0	0	0	0	13205	0	1413
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	10354	0	224
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	10673	0	240
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	10081	0	7
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	163382	0	6
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	119	0	6
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	238	0	4
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	295	0	6
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	384	0	5
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	277	0	5
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	465	0	5
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	51665	0	1
+../instances/complex3/wikispeedia-n_50	0	0	0	0	0	0	0	0	0	0	0	416	0	1
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	4178	0	107
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	2016	0	122
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	18219	0	98
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	77165	0	113
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	1028	0	303
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	1099	0	295
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	69264	0	170
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	721	0	232
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	855	0	190
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	74303	0	190
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	870	0	232
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	77629	0	232
+../instances/complex3/wikispeedia-n_500	0	0	0	0	0	0	0	0	0	0	0	242700	0	232
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	665	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	278837	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1780	0	148
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	474	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	474	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	426	0	195
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	440587	0	195
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	384	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	314	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	132917	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	389	0	199
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	504	0	194
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1071	0	194
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	597	0	117
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	587	0	117
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	574	0	117
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1724	0	145
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	622	0	117
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	611	0	172
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	731	0	117
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	505	0	168
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1745	0	144
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1807	0	145
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1742	0	144
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1719	0	152
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	1966	0	139
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	61785	0	141
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	68416	0	145
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	7284	0	145
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	3884	0	155
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	4004	0	153
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	7729	0	143
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	2611	0	168
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	4071	0	162
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	14899	0	159
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	16114	0	163

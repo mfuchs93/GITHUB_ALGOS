@@ -6,7 +6,7 @@ public class DFVS {
     public static HashSet<Vertex> branch(Graph g, int k, LinkedList<HashSet<Vertex>> independentCliques, int level) {
         Main.countStep();
         if (Thread.interrupted()) {
-            Main.log(Main.path);
+            Main.log(Main.path, 0);
             System.out.println("#Timeout");
             //System.exit(1);
         }
@@ -56,11 +56,12 @@ public class DFVS {
     }
 
     public static HashSet<Vertex> solveSubGraph(Graph subGraph) {
+        int upperBound = DFVSHeuristic.upperBound(subGraph);
         HashSet<Vertex> s = null;
         HashSet<Vertex> solution = new HashSet<>(ReductionRules.chainingRule(subGraph));
         Main.chaining3 += ReductionRules.removed;
         if (subGraph.getVertices().isEmpty()) return solution;
-        Flower flower = new Flower(subGraph);
+        Flower flower = new Flower(subGraph, null);
         //flower.petalOneRule(subGraph);
         ArrayList<Vertex> verticesToDelete = new ArrayList<>();
         Clique clique = new Clique(subGraph, 10);
@@ -93,7 +94,7 @@ public class DFVS {
                 for (Vertex v :
                         set) {
                     if (Thread.interrupted()) {
-                        Main.log(Main.path);
+                        Main.log(Main.path, s.size());
                         System.out.println("#Timeout");
                         //System.exit(1);
                     }

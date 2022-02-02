@@ -94,6 +94,10 @@ public class Graph implements Comparable<Graph> {
         return g;
     }
 
+    public int getDegree(Vertex v){
+        return this.getOutDegree(v) + this.getInDegree(v);
+    }
+
     @Override
     public int compareTo(Graph graph) {
         return this.getVertices().size() - graph.getVertices().size();
@@ -104,6 +108,10 @@ public class Graph implements Comparable<Graph> {
 //        }
     }
 
+    public void removeEdge(Vertex source, Vertex target) {
+        this.getOutEdges().get(source).remove(target);
+        this.getInEdges().get(target).remove(source);
+    }
     public void splitVertex(Vertex v) {
         //new v+ and v- vertices
         Vertex v_plus = new Vertex(this.id_counter++, v.getName());
