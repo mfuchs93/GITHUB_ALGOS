@@ -96,7 +96,7 @@ public class DFASHeuristic {
                 for (Vertex v :
                         set) {
                     if (Thread.interrupted()) {
-                        Main.log(Main.path, s.size());
+                        Main.log(Main.path, s==null? 0: s.size());
                         System.out.println("#Timeout");
                         //System.exit(1);
                     }

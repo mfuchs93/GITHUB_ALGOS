@@ -12,6 +12,7 @@ public class Clique {
     // Stores the vertices
     private final int[] store;
     private int n;
+    private long startTime;
 
     public void setCliques(ArrayList<HashSet<Vertex>> cliques) {
         this.cliques = cliques;
@@ -31,12 +32,14 @@ public class Clique {
         this.d = new int[MAX];
         this.n = 0;
         this.vertices = new Vertex[MAX];
+        this.startTime = 0;
         convertGraph();
         for (int i :
                 d) {
             if (i > 0) this.n++;
         }
         if (n > 0){
+            startTime = System.currentTimeMillis();
             if (this.n < 10) this.k = this.n;
             findCliques(0, 1, this.k, false);
             cliques.sort((vertices, t1) -> t1.size() - vertices.size());
@@ -105,6 +108,7 @@ public class Clique {
 
     // Function to find all the cliques of size s
     public void findCliques(int i, int l, int s, boolean findOne) {
+        if (System.currentTimeMillis() - startTime > 5_000) return;
         // Check if any vertices from i+1 can be inserted
         for (int j = i + 1; j <= n - (s - l); j++)
 

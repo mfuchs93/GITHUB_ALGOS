@@ -159,3 +159,31 @@
 ../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	4071	0	162
 ../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	14899	0	159
 ../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	16114	0	163
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	13	2	18	4	1	0	0	0	0	0	0	594	0	1
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	13	2	18	4	1	0	0	0	0	0	0	565	0	1
+../instances/flowtest.txt	1	0	0	0	2	0	0	0	0	0	1	5208	0	2
+../instances/flowtest.txt	0	0	0	3	3	0	1	0	0	0	0	124	0	3
+../instances/flowtest.txt	0	0	0	0	3	0	0	0	0	0	3	62	0	3
+../instances/synthetic3/synth-n_200-m_2169-k_15-p_0.1.txt	13	2	4	29	14	20	0	13	0	7	0	1835	0	15
+../instances/complex3/wikispeedia-n_500	194	34	13	118	46	74	0	10	0	2	0	599	2	59
+../instances/complex3/wikispeedia-n_500	194	34	0	2	37	1	0	1	0	0	0	318247	0	0
+../instances/complex3/wikispeedia-n_500	194	34	13	118	46	74	0	10	0	2	0	803159	2	59
+../instances/complex3/wikispeedia-n_500	194	34	13	118	46	74	0	10	0	2	0	503	2	56
+../instances/synthetic3/synth-n_200-m_1245-k_25-p_0.05.txt	27	0	8	185	14	104	0	14	0	0	0	175248	0	0
+../instances/synthetic3/synth-n_200-m_1245-k_25-p_0.05.txt	27	0	8	0	14	0	0	14	0	0	0	1342	0	0
+../instances/synthetic3/synth-n_200-m_1245-k_25-p_0.05.txt	27	0	8	0	14	0	0	14	0	0	0	1206	0	0
+../instances/synthetic3/synth-n_200-m_1245-k_25-p_0.05.txt	27	0	8	216	22	124	0	22	0	4	0	24320	4	24
+../instances/synthetic3/synth-n_200-m_1245-k_25-p_0.05.txt	27	0	8	216	22	124	0	22	0	4	0	22908	4	24
+../instances/synthetic3/synth-n_200-m_5366-k_70-p_0.2.txt	0	0	0	162	59	70	0	59	0	0	0	175821	0	0
+../instances/complex3/wikispeedia-n_200	82	10	0	0	14	0	0	0	0	0	0	106	0	14	0	0	0
+../instances/complex3/wikispeedia-n_500	194	34	13	21	42	8	0	11	0	2	0	486	2	56	11	21	20
+../instances/synthetic3/synth-n_500-m_7774-k_70-p_0.05.txt	7	0	0	0	0	14	0	68	0	0	0	175003	0	0	68	80	70
+../instances/synthetic3/synth-n_500-m_7774-k_70-p_0.05.txt	7	0	0	0	0	14	0	68	0	0	0	177388	0	0	68	80	70
+../instances/synthetic3/synth-n_200-m_5144-k_50-p_0.2.txt	0	0	0	181	0	93	0	48	0	8	0	163218	8	50	48	53	50
+../instances/synthetic3/synth-n_200-m_5144-k_50-p_0.2.txt	0	0	0	1433	0	753	0	46	0	8	0	34902	8	50	46	53	50
+../instances/synthetic3/synth-n_400-m_18943-k_50-p_0.2.txt	0	0	0	44	0	16	0	48	0	23	0	44177	0	50	48	50	50
+../instances/synthetic3/synth-n_400-m_18943-k_50-p_0.2.txt	0	0	0	44	0	16	0	48	0	23	0	35378	0	50	48	50	50	1078
+../instances/complex3/usairport-n_1500	447	182	8	32488	176	8837	1	51	0	0	9	175002	0	0	58	103	102	428
+../instances/synthetic3/synth-n_400-m_10064-k_70-p_0.1.txt	0	0	0	1812	0	948	0	68	0	0	0	175010	0	0	68	70	70	1327
+../instances/synthetic3/synth-n_150-m_1423-k_30-p_0.1.txt	6	0	0	20099	0	12040	0	24	0	0	0	175003	0	0	24	43	32	537
+../instances/synthetic3/synth-n_150-m_1423-k_30-p_0.1.txt	6	0	0	3700	0	2294	0	24	0	0	0	175361	0	0	24	43	32	587

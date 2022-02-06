@@ -1350,3 +1350,47 @@
 ../instances/synthetic3/synth-n_1300-m_191963-k_120-p_0.2.txt	0	0	0	0	0	0	0	0	0	0	0	3356	0	1300
 ../instances/complex3/bitcoinalpha-n_1500	0	0	0	0	0	0	0	0	0	0	0	1152	0	717
 ../instances/complex3/out.cfinder-google-n_8000	0	0	0	0	0	0	0	0	0	0	0	91552	0	4892
+../instances/synthetic3/synth-n_250-m_3493-k_25-p_0.1.txt	11	0	0	35	22	49	0	21	0	15	0	4752	13	25
+../instances/complex3/ChicagoRegional-n_4000	1346	94	14	22	1004	6	0	10	0	0	0	1174	0	1020
+../instances/synthetic3/synth-n_400-m_4551-k_30-p_0.05.txt	23	1	5	216	26	190	0	26	0	17	0	11901	14	30
+../instances/complex3/health-n_1000	408	127	33	24	199	9	0	12	0	0	8	352	0	231
+../instances/complex3/link-kv-n_100	6	0	0	6	6	2	0	2	0	0	0	63	0	8
+../instances/synthetic3/synth-n_400-m_18943-k_50-p_0.2.txt	0	0	0	43	48	15	0	48	0	23	0	23221	0	50
+../instances/complex3/ChicagoRegional-n_200	7	0	0	0	5	0	0	0	0	0	0	46	0	5
+../instances/complex3/temporalGraph-n_50	9	0	0	0	0	0	0	0	0	0	0	37	0	3
+../instances/complex3/advotogo-n_100	17	6	0	0	2	0	0	0	0	0	0	45	0	2
+../instances/complex3/temporalGraph-n_100	1	0	0	0	0	0	0	0	0	0	0	81	0	0
+../instances/complex3/wikispeedia-n_100	18	0	0	0	0	0	0	0	0	0	0	199	0	0
+../instances/synthetic3/synth-n_500-m_6745-k_25-p_0.05.txt	26	0	3	22	23	39	0	23	0	17	0	9972	13	25
+../instances/complex3/talk-oc-n_3000	2601	72	0	0	29	0	0	0	0	0	0	626	0	29
+../instances/complex3/link-kv-n_50	3	0	0	0	0	0	0	0	0	0	0	48	0	0
+../instances/complex3/out.cfinder-google-n_5000	1739	524	53	756	988	240	0	227	0	12	88	3580	1	1200
+../instances/complex3/chess-n_50	2	0	0	0	0	0	0	0	0	0	0	39	0	0
+../instances/complex3/ChicagoRegional-n_7000	2337	597	172	354	2313	94	0	178	0	10	18	6338	0	2503
+../instances/complex3/ChicagoRegional-n_50	2	0	0	0	0	0	0	0	0	0	0	34	0	2
+../instances/complex3/ChicagoRegional-n_3000	878	21	4	19	623	5	0	9	0	0	0	524	0	631
+../instances/complex3/talk-oc-n_1500	213	19	1	0	14	0	0	0	0	0	0	101	0	15
+../instances/complex3/ChicagoRegional-n_1000	119	1	0	0	92	0	0	0	0	0	0	84	0	92
+../instances/complex3/ChicagoRegional-n_100	1	0	0	0	0	0	0	0	0	0	0	44	0	1
+../instances/complex3/openflights-n_2000	591	225	73	90	522	44	0	53	0	15	80	1036	12	599
+../instances/synthetic3/synth-n_500-m_27136-k_30-p_0.2.txt	0	0	0	1	30	0	0	30	0	30	0	27421	0	30
+../instances/complex3/wikispeedia-n_500	194	34	13	118	46	74	0	10	0	2	0	279	2	59
+../instances/complex3/health-n_200	58	0	0	0	17	0	0	0	0	0	0	74	0	17
+../instances/synthetic3/synth-n_250-m_3237-k_10-p_0.1.txt	11	0	4	1	10	0	0	10	0	10	0	4295	0	10
+../instances/complex3/ChicagoRegional-n_6000	2073	394	89	252	1877	61	0	133	0	12	10	3681	1	1991
+../instances/complex3/temporalGraph-n_200	40	0	0	0	5	0	0	0	0	0	0	46	0	5
+../instances/synthetic3/synth-n_500-m_26954-k_25-p_0.2.txt	2	0	0	1	25	0	0	25	0	25	0	25948	0	25
+../instances/synthetic3/synth-n_50-m_139-k_5-p_0.1.txt	24	3	11	1	0	0	0	0	0	0	0	336	0	1
+../instances/complex3/talk-oc-n_500	18	0	0	0	3	0	0	0	0	0	0	45	0	3
+../instances/complex3/bitcoinalpha-n_2000	720	154	25	19	369	4	0	12	0	1	0	437	1	393
+../instances/synthetic3/synth-n_150-m_1284-k_20-p_0.1.txt	11	0	0	3004	14	2084	0	14	0	7	0	8622	7	20
+../instances/synthetic3/synth-n_500-m_32243-k_120-p_0.2.txt	0	0	0	0	0	10	0	115	0	0	0	175812	0	0	115	120	120
+../instances/complex3/advotogo-n_3000	1025	304	126	6	401	2	0	124	0	0	17	176245	0	0	124	242	235
+../instances/synthetic3/synth-n_700-m_33182-k_200-p_0.1.txt	0	0	0	0	0	0	0	0	0	0	0	175005	0	0	0	203	200
+../instances/synthetic3/synth-n_400-m_19735-k_70-p_0.2.txt	0	0	0	7	0	66	0	67	0	0	0	178480	0	0	67	71	70
+../instances/complex3/chess-n_2000	764	74	40	0	60	0	5	104	0	0	0	181052	0	0	115	176	162
+../instances/synthetic3/synth-n_500-m_8716-k_150-p_0.05.txt	0	0	0	0	0	0	0	123	0	0	0	175909	0	0	123	158	150
+../instances/synthetic3/synth-n_500-m_15273-k_70-p_0.1.txt	0	0	0	0	0	14	0	69	0	0	0	181315	0	0	69	71	70
+../instances/complex3/link-kv-n_2000	676	163	20	929	218	141	7	163	0	0	98	177789	0	0	201	361	360
+../instances/synthetic3/synth-n_500-m_8350-k_100-p_0.05.txt	2	0	0	0	0	6	0	91	0	0	0	179742	0	0	91	106	100
+../instances/synthetic3/synth-n_500-m_31513-k_100-p_0.2.txt	0	0	0	0	0	6	0	92	0	0	0	175447	0	0	92	100	100

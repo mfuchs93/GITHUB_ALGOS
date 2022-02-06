@@ -1,0 +1,12 @@
+../instances/complex3/advotogo-n_3000 timelimit reached
+../instances/synthetic3/synth-n_500-m_32243-k_120-p_0.2.txt timelimit reached
+../instances/synthetic3/synth-n_500-m_15985-k_100-p_0.1.txt timelimit reached
+../instances/synthetic3/synth-n_700-m_33182-k_200-p_0.1.txt timelimit reached
+../instances/complex3/chess-n_2000 timelimit reached
+../instances/synthetic3/synth-n_400-m_19735-k_70-p_0.2.txt timelimit reached
+../instances/synthetic3/synth-n_500-m_8716-k_150-p_0.05.txt timelimit reached
+../instances/synthetic3/synth-n_500-m_15273-k_70-p_0.1.txt timelimit reached
+../instances/complex3/link-kv-n_2000 timelimit reached
+../instances/synthetic3/synth-n_500-m_8350-k_100-p_0.05.txt timelimit reached
+../instances/synthetic3/synth-n_700-m_29736-k_100-p_0.1.txt timelimit reached
+../instances/synthetic3/synth-n_500-m_31513-k_100-p_0.2.txt timelimit reached

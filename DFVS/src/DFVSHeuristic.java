@@ -97,7 +97,7 @@ public class DFVSHeuristic {
                 for (Vertex v :
                         set) {
                     if (Thread.interrupted()) {
-                        Main.log(Main.path, s.size());
+                        Main.log(Main.path, s==null? 0: s.size());
                         System.out.println("#Timeout");
                         //System.exit(1);
                     }
@@ -137,8 +137,9 @@ public class DFVSHeuristic {
     public static HashSet<Vertex> solve(Graph g) {
         HashSet<Vertex> s = new HashSet<>();
         int i = 0;
+        Graph h = new Graph(g);
         while (true) {
-            ArrayList<Vertex> cycle = new Cycle(g, SearchType.DFS, false, false).cycle();
+            ArrayList<Vertex> cycle = new Cycle(h, SearchType.DFS, false, false).cycle();
             if (cycle.isEmpty()) break;
             Vertex vertexToDelete = null;
 //            Flower flower = new Flower(g, cycle);
@@ -151,7 +152,7 @@ public class DFVSHeuristic {
 //                    vertexToDelete = v;
 //                }
 
-                if (vertexToDelete == null || min(g.getInDegree(v), g.getOutDegree(v)) > min(g.getInDegree(vertexToDelete), g.getOutDegree(vertexToDelete))){
+                if (vertexToDelete == null || min(h.getInDegree(v), h.getOutDegree(v)) > min(h.getInDegree(vertexToDelete), h.getOutDegree(vertexToDelete))){
                     vertexToDelete = v;
                 }
 
@@ -159,40 +160,29 @@ public class DFVSHeuristic {
 //                    vertexToDelete = v;
 //                }
             }
-            g.removeVertex(vertexToDelete, false, false);
+            h.removeVertex(vertexToDelete, false, false);
             s.add(vertexToDelete);
 //            System.out.println(++i);
         }
-//        HashSet<Vertex> solution = new HashSet<>(ReductionRules.chainingRule(g));
-//        Main.chaining1 = ReductionRules.removed;
-//        if (g.getVertices().isEmpty()) return solution;
-//        Clique clique = new Clique(g, 10);
-//        while (true) {
-//            HashSet<Vertex> verticesToDelete = clique.cliqueRule();
-//            Main.cliqueRule += verticesToDelete.size();
-//            if (verticesToDelete.isEmpty()) {
-//                break;
-//            }
-//            for (Vertex v :
-//                    verticesToDelete) {
-//                g.removeVertex(v, false, false);
-//            }
-//            solution.addAll(verticesToDelete);
-//            System.out.println("#removed by cliqueRule: " + verticesToDelete.size());
-//        }
-//        solution.addAll(ReductionRules.chainingRule(g));
-//        Main.preK += solution.size();
-//        Main.chaining2 = ReductionRules.removed;
-//        if (g.getVertices().isEmpty()) return solution;
-//        ArrayList<Graph> subGraphs = new Tarjan(g).SCC();
-//        if (subGraphs.isEmpty())
-//            return solution;
-//        Collections.sort(subGraphs);
-//        for (Graph subGraph :
-//                subGraphs) {
-//            s = solveSubGraph(subGraph);
-//            solution.addAll(s);
-//        }
+        Main.greedyUpperBound += s.size();
+        boolean removed = true;
+        ArrayList<Vertex> list = new ArrayList<>();
+        while (removed) {
+            list.forEach(s::remove);
+            removed = false;
+            for (Vertex v :
+                    s) {
+                Graph x = new Graph(g);
+                s.stream().filter(w -> w != v).forEach(b -> x.removeVertex(b, false, false));
+                Cycle c = new Cycle(x, SearchType.DFS, false, false);
+                if (c.cycle().isEmpty()) {
+                    removed = true;
+                    list.add(v);
+                    break;
+                }
+            }
+        }
+
         return s;
     }
 
