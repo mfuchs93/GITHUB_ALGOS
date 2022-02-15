@@ -22,7 +22,7 @@ public class Main {
     public static long upperBoundTime = 0;
 
     public static boolean USEDFVS = true;
-    public static boolean HEURISTIC = false;
+    public static boolean HEURISTIC = true;
     public static int lowerBound = 0;
 
 

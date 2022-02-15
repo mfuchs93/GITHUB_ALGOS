@@ -57,7 +57,8 @@ public class DFVS {
 
     public static HashSet<Vertex> solveSubGraph(Graph subGraph) {
         long startTime = System.currentTimeMillis();
-        int upperBound = DFVSHeuristic.upperBound(new Graph(subGraph));
+        HashSet<Vertex> heuristicSol = DFVSHeuristic.solve(new Graph(subGraph));
+        int upperBound = heuristicSol.size();
         Main.upperBound += upperBound;
         Main.upperBoundTime += System.currentTimeMillis() - startTime;
         HashSet<Vertex> s = null;
@@ -91,6 +92,11 @@ public class DFVS {
         HashSet<Vertex> currentSolution = new HashSet<>();
         while (left <= right) {
             System.out.println("#(" + left + ", " + right + ")");
+            if (left == upperBound) {
+                currentSolution = heuristicSol;
+                solution.clear();
+                break;
+            }
             int k = left + ((right - left) / 2);
             verticesToDelete = flower.petalRule(k);
 
@@ -130,10 +136,12 @@ public class DFVS {
                     currentSolution.addAll(s);
                     Main.flowers += verticesToDelete.size();
                     Main.lbFlower += subLBFlower;
-                    right = k - 1;
-                } else {
-                    left = k + 1;
                 }
+            }
+            if (s != null) {
+                right = k - 1;
+            } else {
+                left = k + 1;
             }
             flower.resetPetals();
             subLBFlower = 0;

@@ -18,7 +18,13 @@ public class Flower {
         this.maxFlowGraph = new Graph(g);
         convertToFlowGraph();
         HashSet<Vertex> vertices = (HashSet<Vertex>) this.maxFlowGraph.getVertices();
+        long startTime = System.currentTimeMillis();
         for (int i = 0; i < vertexCount - 1; i += 2) {
+            if (System.currentTimeMillis() - startTime > 30_000){
+                averageFlow /= round((double) (i-2) * 0.5 * 3/5 + 1);
+                this.resetPetals();
+                return;
+            }
             int finalI1 = i;
             if (cycle == null || cycle.stream().map(Vertex::getId).collect(Collectors.toList()).contains(i) && !(g.getVertices().stream().filter(v -> v.getId() == finalI1).collect(Collectors.toList()).get(0).getMaxPetal() == 0)) {
                 int flow = fordFulkerson(this.maxFlowMatrix, i, i + 1);
